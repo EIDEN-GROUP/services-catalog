@@ -1,0 +1,185 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * EIDEN Group · Services landing
+ * Aesthetic: Mondrian clarity · Swiss editorial grid · NY-magazine art-direction · Apple polish
+ * Typography: Fraunces (editorial display) · Geist (UI sans) · JetBrains Mono (technical)
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-canvas: var(--canvas);
+  --color-beige: var(--beige);
+  --color-beige-dk: var(--beige-dk);
+  --color-forest: var(--forest);
+  --color-forest-md: var(--forest-md);
+  --color-teal: var(--teal);
+  --color-teal-lt: var(--teal-lt);
+  --color-gold: var(--gold);
+  --color-gold-dk: var(--gold-dk);
+  --color-cream: var(--cream);
+  --color-mondrian-red: var(--mondrian-red);
+  --color-mondrian-blue: var(--mondrian-blue);
+  --color-mondrian-yellow: var(--mondrian-yellow);
+
+  --font-display: "Fraunces", serif;
+  --font-head: "Geist", "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  --font-body: "Geist", "Inter", sans-serif;
+  --font-label: "JetBrains Mono", monospace;
+}
+
+:root {
+  --radius: 0.5rem;
+
+  /* Brand */
+  --canvas:    oklch(0.992 0.005 85);
+  --beige:     oklch(0.935 0.040 88);
+  --beige-dk:  oklch(0.890 0.040 86);
+  --forest:    oklch(0.225 0.025 165);
+  --forest-md: oklch(0.180 0.022 165);
+  --teal:      oklch(0.430 0.060 185);
+  --teal-lt:   oklch(0.520 0.075 185);
+  --gold:      oklch(0.810 0.060 90);
+  --gold-dk:   oklch(0.745 0.065 88);
+  --cream:     oklch(0.965 0.020 86);
+
+  /* Mondrian accents (sparingly) */
+  --mondrian-red:    oklch(0.585 0.215 27);
+  --mondrian-blue:   oklch(0.470 0.180 255);
+  --mondrian-yellow: oklch(0.870 0.165 90);
+
+  --background: var(--canvas);
+  --foreground: var(--forest);
+  --card: var(--cream);
+  --card-foreground: var(--forest);
+  --popover: var(--canvas);
+  --popover-foreground: var(--forest);
+  --primary: var(--forest);
+  --primary-foreground: var(--beige);
+  --secondary: var(--beige);
+  --secondary-foreground: var(--forest);
+  --muted: var(--cream);
+  --muted-foreground: oklch(0.380 0.020 170);
+  --accent: var(--gold);
+  --accent-foreground: var(--forest);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.860 0.025 90);
+  --input: oklch(0.860 0.025 90);
+  --ring: var(--teal);
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html { scroll-behavior: smooth; }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-body);
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection { background: var(--forest); color: var(--canvas); }
+}
+
+@layer utilities {
+  .font-display { font-family: var(--font-display); font-optical-sizing: auto; font-variation-settings: "SOFT" 50, "WONK" 0; }
+  .font-display-wonk { font-family: var(--font-display); font-variation-settings: "SOFT" 100, "WONK" 1; }
+  .font-head { font-family: var(--font-head); }
+  .font-mono { font-family: var(--font-mono); }
+  .font-label { font-family: var(--font-label); letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500; }
+  .font-body { font-family: var(--font-body); }
+
+  .grain { position: relative; }
+  .grain::after {
+    content: ""; position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.06'/%3E%3C/svg%3E");
+    pointer-events: none; mix-blend-mode: multiply; z-index: 1;
+  }
+
+  .text-balance { text-wrap: balance; }
+  .text-pretty  { text-wrap: pretty; }
+
+  .marquee-track { animation: marquee 10s linear infinite; }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* Mondrian grid divider */
+  .mondrian-rule { background: var(--forest); }
+
+  /* Glass card */
+  .glass {
+    background: color-mix(in oklab, var(--canvas) 55%, transparent);
+    backdrop-filter: blur(24px) saturate(1.4);
+    -webkit-backdrop-filter: blur(24px) saturate(1.4);
+    border: 1px solid color-mix(in oklab, var(--forest) 12%, transparent);
+  }
+  .glass-dark {
+    background: color-mix(in oklab, var(--forest-md) 65%, transparent);
+    backdrop-filter: blur(28px) saturate(1.3);
+    -webkit-backdrop-filter: blur(28px) saturate(1.3);
+    border: 1px solid color-mix(in oklab, var(--beige) 14%, transparent);
+  }
+
+  /* Animated paper grid */
+  .paper-grid {
+    background-image:
+      linear-gradient(to right, color-mix(in oklab, var(--forest) 6%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in oklab, var(--forest) 6%, transparent) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  /* Apple-style focus */
+  .focus-ring { transition: box-shadow .2s ease; }
+  .focus-ring:focus-visible { outline: none; box-shadow: 0 0 0 3px color-mix(in oklab, var(--teal) 35%, transparent); }
+
+  /* Side video scenes   looping CSS painterly animation */
+  .scene { position: absolute; inset: 0; opacity: 0; animation: scene-cycle 24s infinite; }
+  .scene-1 { animation-delay: 0s; }
+  .scene-2 { animation-delay: 6s; }
+  .scene-3 { animation-delay: 12s; }
+  .scene-4 { animation-delay: 18s; }
+  @keyframes scene-cycle {
+    0%, 4%   { opacity: 0; transform: scale(1.05); }
+    8%, 22%  { opacity: 1; transform: scale(1); }
+    25%, 100% { opacity: 0; transform: scale(1); }
+  }
+
+  @keyframes drift {
+    0%,100% { transform: translate3d(0,0,0); }
+    50%     { transform: translate3d(0,-8px,0); }
+  }
+  .drift { animation: drift 6s ease-in-out infinite; }
+}
