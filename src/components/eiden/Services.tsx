@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import svcAudit from "@/assets/audit-2.jpg";
 import svcArch from "@/assets/strategy-2.jpg";
@@ -10,48 +10,158 @@ import svcCrm from "@/assets/crm-1.jpg";
 import svcBranding from "@/assets/branding-1.jpg";
 import svcWeb from "@/assets/web-2.jpg";
 
-const SERVICES = [
-  { n: "01", t: "Audit & Diagnostic", d: "Cartographie chirurgicale de votre opération. Nous identifions chaque fuite, chaque levier, chaque écart à fermer.", img: svcAudit },
-  { n: "02", t: "Architecture Stratégique", d: "Le cadre maître dans lequel chaque décision s'inscrit. Positionnement, feuille de route, modèle économique.",  img: svcArch },
-  { n: "03", t: "Optimisation Opérationnelle", d: "Nous éliminons les frictions, automatisons le répétitif et installons les systèmes qui scalent sans épuiser vos équipes.", img: svcOps },
-  { n: "04", t: "Génération de Leads & Achat Média", d: "Funnels mesurés, créatifs testés, campagnes qui remplissent votre pipeline avec des leads que votre commerce peut signer.", img: svcLeads },
-  { n: "05", t: "Référencement Local & Digital", d: "Présence locale qui convertit, SEO technique et de contenu pour devenir l'évidence dans votre catégorie.", img: svcSeo },
-  { n: "06", t: "CRM · Gestion de la Relation Client", d: "Architecture CRM, séquences, automations et reporting pour transformer chaque conversation en revenu prévisible.", img: svcCrm },
-  { n: "07", t: "Branding & Positionnement de Marque", d: "Identité visuelle et verbale. Pas un logo   une marque qui se reconnaît avant même d'être lue.",  img: svcBranding },
-  { n: "08", t: "Développement Web", d: "Sites éditoriaux rapides, plateformes sur-mesure, expériences qui chargent en moins d'une seconde et convertissent.", img: svcWeb },
+export const SERVICES = [
+  {
+    n: "01",
+    t: "Marque & Identité",
+    d: "L'art de l'impact immédiat et durable. Nous façonnons des chartes de rigueur et des identités visuelles d'une finesse chirurgicale, établissant votre autorité sectorielle dès le premier regard.",
+    img: svcBranding,
+    items: [
+      "Logo + identité visuelle",
+      "Identité complète + charte",
+      "Image de dirigeant (personal branding)",
+      "Changement d'image complet (rebranding)"
+    ]
+  },
+  {
+    n: "02",
+    t: "Site Web & Développement",
+    d: "La clé de voûte de votre présence numérique. Des plateformes ultra-performantes, conçues avec l'exigence du design suisse : vélocité absolue, accessibilité impeccable et taux de conversion d'élite.",
+    img: svcWeb,
+    items: [
+      "Page unique (landing page)",
+      "Site vitrine (5–7 pages)",
+      "Boutique en ligne (e-commerce)",
+      "Entretien & hébergement"
+    ]
+  },
+  {
+    n: "03",
+    t: "Photo & Vidéo",
+    d: "La narration visuelle par excellence. Nous matérialisons votre univers avec des séances de prise de vue rigoureuses, des packs vidéo taillés pour l'acquisition et des présentations corporate cinématographiques.",
+    img: svcAudit, // mapped to Photo & Vidéo as per user requirement to preserve images
+    items: [
+      "Shooting photo ½ journée",
+      "Pack contenu vidéo (10 reels/mois)",
+      "Vidéo corporate / présentation"
+    ]
+  },
+  {
+    n: "04",
+    t: "Marketing & Acquisition",
+    d: "Vos systèmes de conquête commerciale. Des funnels optimisés au pixel près, des campagnes d'acquisition agressives et un positionnement SEO dominant pour capter l'intérêt de vos futurs ambassadeurs.",
+    img: svcLeads, // keeping seo image imported in file structure as reference
+    items: [
+      "Réseaux sociaux — Essentiel",
+      "Réseaux sociaux — Standard",
+      "Référencement Google (SEO)",
+      "Publicité en ligne (Meta / Google)",
+      "Génération de prospects (leads)",
+      "Stratégie marketing"
+    ]
+  },
+  {
+    n: "05",
+    t: "IA & Automatisation",
+    d: "L'organisation libérée de tout goulot d'étranglement. Nous connectons vos applications, automatisons les flux répétitifs et deploierons des agents conversationnels de pointe pour démultiplier la productivité.",
+    img: svcOps,
+    items: [
+      "Automatiser une tâche / un workflow",
+      "Assistant / chatbot IA",
+      "Automatisation des processus"
+    ]
+  },
+  {
+    n: "06",
+    t: "Conseil & Organisation",
+    d: "La consolidation de vos fondations opérationnelles. Analyse fine de vos workflows, encadrement mensuel et programmes d'alignement pour outiller vos équipes de la rigueur opérationnelle Eiden.",
+    img: svcArch,
+    items: [
+      "Workflows & gestion des opérations",
+      "Accompagnement mensuel",
+      "Recrutement / talents",
+      "Formation des équipes (B-Arch Labs)"
+    ]
+  },
+  {
+    n: "07",
+    t: "Logiciels propriétaires (abonnement léger)",
+    d: "Votre arsenal technologique personnalisé sous abonnement léger. Pilotez votre organisme avec nos CRM d'écoles, nos logiciels BMS ou nos portails de réservation intelligents créés entièrement sur-mesure.",
+    img: svcCrm, // svcCrm used for CRM & Software
+    items: [
+      "Gestion d'entreprise (BMS)",
+      "CRM Écoles & Centres",
+      "CRM Pipeline & Ventes",
+      "Tableaux de bord (Dashboards)",
+      "Agent de Réservation IA",
+      "Logiciel sur mesure"
+    ]
+  }
 ];
 
 export function Services({ onCommission }: { onCommission: (service?: string) => void }) {
   const [active, setActive] = useState(0);
   const current = SERVICES[active];
+  const tabsContainerRef = useRef<HTMLDivElement>(null);
+
+  // Sync horizontal tab scrolling on change with optimal centering
+  useEffect(() => {
+    const activeTabEl = document.getElementById(`tab-${SERVICES[active].n}`);
+    if (activeTabEl && tabsContainerRef.current) {
+      const container = tabsContainerRef.current;
+      const containerWidth = container.offsetWidth;
+      const tabOffsetLeft = activeTabEl.offsetLeft;
+      const tabWidth = activeTabEl.offsetWidth;
+      
+      container.scrollTo({
+        left: tabOffsetLeft - containerWidth / 2 + tabWidth / 2,
+        behavior: "smooth"
+      });
+    }
+  }, [active]);
+
+  const handleNext = () => {
+    setActive((active + 1) % SERVICES.length);
+  };
 
   return (
-    <section id="services" className="relative bg-canvas py-10 overflow-hidden">
-      <div className="mx-auto max-w-[1400px] px-5 md:px-10">
-        {/* Editorial header   Swiss split */}
-        <div className="grid md:grid-cols-12 gap-8 mb-10 pb-10 border-b-2 border-forest">
-          <div className="md:col-span-3 font-mono text-[10px] text-forest/70">
-            <div>SECTION 06</div>
-            <div className="mt-1">SERVICES 08</div>
+    <section id="services" className="relative bg-canvas py-12 px-4 md:px-8 border-t border-forest/10 overflow-hidden">
+      <div className="mx-auto max-w-[1400px]">
+        {/* Editorial header - Swiss split */}
+        <div id="services-header" className="grid md:grid-cols-12 gap-6 mb-8 pb-6 border-b border-forest/20">
+          <div className="md:col-span-3 font-mono text-[10px] text-forest/70 uppercase tracking-widest">
+            <div>SECTION 06 / PORTFOLIO</div>
+            <div className="mt-1">PORT DE SERVICES 07</div>
           </div>
-          <h2 className="md:col-span-6 font-display font-light text-[clamp(1.75rem,4vw,3.5rem)] leading-[0.92] tracking-[-0.03em] text-balance">
-            Là où votre activité <span className="font-display-wonk italic text-teal">se fissure</span>
-            <span className="text-mondrian-red">.</span>
+          <h2 className="md:col-span-9 font-display font-light text-[clamp(1.75rem,4vw,3rem)] leading-[0.92] tracking-[-0.03em] text-balance text-forest">
+            Là où votre activité <span className="font-display-wonk italic text-teal">se déploie</span>
+            <span className="text-mondrian-red font-bold font-sans">.</span>
           </h2>
         </div>
 
-        {/* Tabs strip   horizontally scrollable pills */}
-        <div role="tablist" aria-label="Services" className="-mx-5 md:mx-0 mb-10">
-          <div className="flex gap-2 overflow-x-auto px-5 md:px-0 pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        {/* Tabs strip - horizontally scrollable pills */}
+        <div className="relative mb-8">
+          {/* Subtle fade indicators for scroll */}
+          <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-canvas to-transparent pointer-events-none z-10 md:hidden" />
+          <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-canvas to-transparent pointer-events-none z-10 md:hidden" />
+          
+          <div 
+            ref={tabsContainerRef}
+            role="tablist" 
+            aria-label="Services" 
+            className="flex gap-2 overflow-x-auto py-2 px-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
             {SERVICES.map((s, i) => {
               const isActive = active === i;
               return (
                 <button
+                  id={`tab-${s.n}`}
                   key={s.n}
                   role="tab"
                   aria-selected={isActive}
+                  aria-controls={`panel-${s.n}`}
                   onClick={() => setActive(i)}
-                  className="relative shrink-0 overflow-hidden rounded-full border border-forest/20 px-4 py-2.5 transition-colors focus-ring"
+                  className="relative shrink-0 overflow-hidden rounded-full border border-forest/15 px-4 py-2 transition-all duration-300 focus-ring cursor-pointer hover:border-forest/50"
                 >
                   {isActive && (
                     <motion.span
@@ -61,12 +171,12 @@ export function Services({ onCommission }: { onCommission: (service?: string) =>
                     />
                   )}
                   <span
-                    className={`relative z-10 inline-flex items-center gap-2 whitespace-nowrap font-mono text-[11px] ${
-                      isActive ? "text-canvas" : "text-forest/60 hover:text-forest"
+                    className={`relative z-10 inline-flex items-center gap-2 whitespace-nowrap font-mono text-[11px] uppercase tracking-wider ${
+                      isActive ? "text-canvas" : "text-forest/70"
                     }`}
                   >
-                    <span className={isActive ? "text-gold" : "text-forest/35"}>{s.n}</span>
-                    {s.t}
+                    <span className={isActive ? "text-[#E6C681]" : "text-forest/35 font-semibold"}>{s.n}</span>
+                    <span className="font-semibold">{s.t}</span>
                   </span>
                 </button>
               );
@@ -74,55 +184,90 @@ export function Services({ onCommission }: { onCommission: (service?: string) =>
           </div>
         </div>
 
-        {/* Tab content   plate image + copy */}
+        {/* Tab content - plate image + copy */}
         <AnimatePresence mode="wait">
           <motion.div
+            id={`panel-${current.n}`}
+            role="tabpanel"
+            aria-labelledby={`tab-${current.n}`}
             key={active}
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -16 }}
-            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start"
           >
-            <div className="relative h-100 overflow-hidden border border-forest/20 bg-cream">
-              <img src={current.img} alt={current.t} className="w-full h-full object-cover" loading="lazy" />
-              <div className="absolute top-4 left-4 right-4 flex justify-between font-mono text-[10px] uppercase tracking-[0.18em]">
-                <span className="rounded-full bg-forest/70 px-2.5 py-1 text-canvas backdrop-blur-sm">Pl. {current.n}</span>
-                <span className="rounded-full bg-forest/70 px-2.5 py-1 text-canvas backdrop-blur-sm">Eiden Group</span>
+            {/* Visual Frame */}
+            <div className="relative h-[440px] overflow-hidden border border-forest/15 bg-cream group shadow-xs rounded-lg">
+              <img 
+                src={current.img} 
+                alt={current.t} 
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103" 
+                loading="lazy" 
+                referrerPolicy="no-referrer"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-forest/30 to-transparent mix-blend-multiply opacity-50 pointer-events-none" />
+              <div className="absolute top-4 left-4 right-4 flex justify-between font-mono text-[9px] uppercase tracking-[0.18em]">
+                <span className="rounded-full bg-forest/85 px-2.5 py-1 text-canvas backdrop-blur-md font-semibold border border-canvas/10">Pl. {current.n}</span>
+                <span className="rounded-full bg-forest/85 px-2.5 py-1 text-canvas backdrop-blur-md font-semibold border border-canvas/10">Eiden Group</span>
               </div>
             </div>
 
-            <div className="flex flex-col">
-              <div className="font-label text-[11px] text-teal">Service {current.n} / 08</div>
+            {/* Copy & Details */}
+            <div className="flex flex-col h-full justify-between">
+              <div>
+                <div className="font-mono text-[10px] font-bold text-teal tracking-widest uppercase">
+                  Service {current.n} / {SERVICES.length.toString().padStart(2, '0')}
+                </div>
 
-              <h3 className="mt-4 font-display font-light text-3xl md:text-5xl leading-[1.03] tracking-tight text-balance">
-                {current.t}
-              </h3>
+                <h3 className="mt-2 font-display font-light text-2xl md:text-4xl leading-[1.03] tracking-tight text-balance text-forest">
+                  {current.t}
+                </h3>
 
-              <p className="mt-6 text-forest/70 text-base leading-relaxed text-pretty">
-                {current.d}
-              </p>
+                <p className="mt-4 text-forest/80 text-sm md:text-base leading-relaxed text-pretty">
+                  {current.d}
+                </p>
 
-              <ul className="mt-8 space-y-2.5">
-                {["Appel découverte de 30 min, sans deck", "Réponse personnelle d'un associé sous 24 h", "Diagnostic clair   que vous nous engagiez ou non"].map((b) => (
-                  <li key={b} className="flex items-start gap-3 text-sm text-forest/70">
-                    <span className="mt-2 h-1.5 w-1.5 shrink-0 bg-gold" />
-                    {b}
-                  </li>
-                ))}
-              </ul>
+                {/* Highly structured lists of specialized deliverables */}
+                <div className="mt-6 border-t border-forest/10 pt-4">
+                  <span className="font-mono text-[9px] uppercase tracking-wider text-forest/40">Prestations & Livrables</span>
+                  <ul className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
+                    {current.items.map((b) => (
+                      <li 
+                        key={b} 
+                        onClick={() => onCommission(b)}
+                        className="flex items-center gap-2.5 text-xs text-forest/80 hover:text-mondrian-red transition-colors duration-200 cursor-pointer group"
+                      >
+                        <span className="h-1 w-1 shrink-0 bg-gold transition-transform group-hover:scale-125" />
+                        <span className="font-medium group-hover:translate-x-0.5 transition-transform">{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
 
-              <div className="mt-10 flex flex-wrap gap-3">
+                <ul className="mt-6 space-y-1.5 border-t border-forest/10 pt-4">
+                  {["Appel de cadrage gratuit, diagnostic clair et sans engagement", "Étude d'architecture stratégique sous 48h"].map((b, idx) => (
+                    <li key={b} className="flex items-start gap-2.5 text-[11px] text-forest/60">
+                      <span className="mt-1.5 h-1 w-1 shrink-0 bg-teal rounded-full" />
+                      <span>{b}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="mt-8 flex flex-wrap gap-3 pt-4 border-t border-forest/10">
                 <button
+                  id="cta-commission"
                   onClick={() => onCommission(current.t)}
-                  className="group inline-flex items-center gap-3 rounded-full bg-forest px-6 py-3.5 font-head text-sm font-medium text-canvas transition hover:bg-mondrian-red focus-ring"
+                  className="group inline-flex items-center gap-3 rounded-full bg-forest px-5 py-3 font-display text-xs font-semibold text-canvas transition-all hover:bg-mondrian-red shadow-xs cursor-pointer hover:shadow hover:-translate-y-0.5"
                 >
                   Réserver mon appel gratuit
-                  <span className="grid h-6 w-6 rounded-full bg-canvas/15 transition group-hover:bg-canvas/25">→</span>
+                  <span className="grid h-5 w-5 rounded-full bg-canvas/15 transition group-hover:bg-canvas/25 place-content-center font-bold">→</span>
                 </button>
                 <button
-                  onClick={() => setActive((active + 1) % SERVICES.length)}
-                  className="inline-flex items-center rounded-full border border-forest/25 px-6 py-3.5 font-head text-sm font-medium text-forest transition hover:border-forest hover:bg-cream focus-ring"
+                  id="btn-next-service"
+                  onClick={handleNext}
+                  className="inline-flex items-center rounded-full border border-forest/25 px-5 py-3 font-display text-xs font-semibold text-forest transition-all hover:border-forest hover:bg-cream cursor-pointer hover:-translate-y-0.5"
                 >
                   Service suivant
                 </button>
