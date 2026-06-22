@@ -15,11 +15,12 @@ import { CommissionModal } from "@/components/eiden/CommissionModal";
 import { ChatWidget } from "@/components/eiden/ChatWidget";
 import { PageLoader } from "@/components/eiden/PageLoader";
 import { MobileStickyCTA } from "@/components/eiden/MobileStickyCTA";
+import { BandBrands } from "@/components/eiden/BandBrands";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "EIDEN Services | Architectes de croissance · Audit, Stratégie, Branding, Web" },
+      { title: "EIDEN | Appel découverte gratuit · Architecture d'entreprise" },
       { name: "description", content: "EIDEN Group conçoit l'architecture qui fait grandir votre entreprise. Réservez un appel découverte gratuit de 30 min avec un associé." },
       { property: "og:title", content: "EIDEN Services | Architectes de croissance" },
       { property: "og:description", content: "Huit disciplines. Une architecture. Réservez un appel gratuit de 30 min." },
@@ -49,8 +50,9 @@ function Index() {
             <HowItWorks onCommission={() => start()} />
             {/* <Testimonials onCommission={() => start()} /> */}
             <FAQ onCommission={() => start()} />
-            <Contact onCommission={() => start()} />
+            {/* <Contact onCommission={() => start()} /> */}
             <Reframe onCommission={() => start()} />
+            <BandBrands />
             <Services onCommission={start} />
             <Footer />
             <CommissionModal open={open} onClose={() => setOpen(false)} initialService={service} />

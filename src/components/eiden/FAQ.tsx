@@ -38,59 +38,60 @@ export function FAQ({ onCommission }: { onCommission: () => void }) {
       <div className="mx-auto max-w-[1400px] px-5 md:px-10">
         <div className="grid md:grid-cols-12 gap-8 mb-12 pb-8 border-b-2 border-forest">
           <div className="md:col-span-3 font-mono text-[10px] text-forest/70">
-            <div>SECTION 05</div>
-            <div className="mt-1">FAQ    05</div>
+            <div>SECTION 03</div>
+            <div className="mt-1">FAQ 05</div>
           </div>
-          <h2 className="md:col-span-9 font-display font-light text-[clamp(2rem,5vw,4.5rem)] leading-[0.95] tracking-[-0.03em] text-balance">
+          <h2 className="md:col-span-9 font-display font-light text-[clamp(1.75rem,4vw,3.5rem)] leading-[0.95] tracking-[-0.03em] text-balance">
             Les questions qu'on nous pose <span className="font-display-wonk italic text-teal">avant l'appel</span>
             <span className="text-mondrian-red">.</span>
           </h2>
         </div>
 
-        <ul className="divide-y divide-forest/15 border-y border-forest/15">
-          {ITEMS.map((it, i) => {
-            const isOpen = open.includes(i);
-            return (
-              <li key={i}>
-                <button
-                  onClick={() => toggle(i)}
-                  aria-expanded={isOpen}
-                  className="w-full flex items-start justify-between gap-6 py-5 md:py-6 text-left group focus-ring"
-                >
-                  <div className="flex items-start gap-4 md:gap-6 min-w-0">
-                    <span className="font-mono text-[10px] text-forest/40 mt-2 shrink-0">0{i + 1}</span>
-                    <span className="font-display text-lg md:text-2xl leading-snug text-pretty">{it.q}</span>
-                  </div>
-                  <span className="grid place-items-center h-8 w-8 shrink-0 rounded-full border border-forest/25 text-forest group-hover:bg-forest group-hover:text-canvas transition">
-                    {isOpen ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
-                  </span>
-                </button>
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                      className="overflow-hidden"
-                    >
-                      <p className="pb-6 md:pl-16 text-forest/75 text-sm md:text-base leading-relaxed max-w-3xl">
-                        {it.a}
-                      </p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </li>
-            );
-          })}
-        </ul>
+        <div className="grid justify-center">
+          <div className="md:col-span-9 md:col-start-4">
+            <ul className="divide-y divide-forest/15 border-y border-forest/15">
+              {ITEMS.map((it, i) => {
+                const isOpen = open.includes(i);
+                return (
+                  <li key={i}>
+                    <button onClick={() => toggle(i)} aria-expanded={isOpen} className="w-full flex items-start justify-between gap-6 py-5 md:py-6 text-left group focus-ring" >
+                      <div className="flex items-start gap-4 md:gap-6 min-w-0">
+                        <span className="font-mono text-[10px] text-forest/40 mt-2 shrink-0">0{i + 1}</span>
+                        <span className="font-display text-lg md:text-2xl leading-snug text-pretty">{it.q}</span>
+                      </div>
+                      <span className="grid place-items-center h-8 w-8 shrink-0 rounded-full border border-forest/25 text-forest group-hover:bg-forest group-hover:text-canvas transition">
+                        {isOpen ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
+                      </span>
+                    </button>
+                    <AnimatePresence initial={false}>
+                      {isOpen && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                          className="overflow-hidden"
+                        >
+                          <p className="pb-6 md:pl-16 text-forest/75 text-sm md:text-base leading-relaxed max-w-3xl">
+                            {it.a}
+                          </p>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </div>
 
         <div className="mt-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
           <p className="font-display text-lg md:text-xl text-forest/80 text-pretty">
             Une autre question ? Posez-la <span className="font-display-wonk italic text-teal">pendant l'appel</span>.
           </p>
-          <button onClick={onCommission} className="inline-flex items-center gap-3 rounded-full bg-forest text-canvas px-6 py-3.5 font-head text-sm hover:bg-teal transition focus-ring">
-            Réserver mon appel gratuit <span>→</span>
+          <button onClick={() => onCommission()} className="group inline-flex items-center gap-3 rounded-full bg-forest px-7 py-4 font-head text-sm font-medium text-canvas hover:bg-mondrian-red transition focus-ring">
+            Réserver mon appel découverte
+            <span className="grid place-items-center h-7 w-7 rounded-full bg-canvas/15 transition group-hover:bg-canvas/25">→</span>
           </button>
         </div>
       </div>

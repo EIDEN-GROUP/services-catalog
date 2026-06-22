@@ -17,22 +17,18 @@ export function Reframe({ onCommission }: { onCommission: () => void }) {
       <div className="relative mx-auto max-w-[1400px] px-5 md:px-10">
         <div className="grid md:grid-cols-12 gap-8 items-end mb-14">
           <div className="md:col-span-2 font-mono text-[10px] text-forest/70">
-            <div>SECTION 02</div>
+            <div>SECTION 04</div>
             <div className="mt-1">REFRAME</div>
           </div>
-          <h2 className="md:col-span-10 font-display font-light text-[clamp(2.25rem,5.5vw,5.5rem)] leading-[0.92] tracking-[-0.035em] text-balance">
+          <h2 className="md:col-span-10 font-display font-light text-[clamp(1.75rem,4vw,3.5rem)] leading-[0.92] tracking-[-0.035em] text-balance">
             Ce n'est pas un problème de <span className="line-through decoration-mondrian-red decoration-2 text-forest/40">stratégie</span>.<br />
             C'est un problème de <span className="font-display-wonk italic text-teal">structure</span>
             <span className="text-mondrian-red">.</span>
           </h2>
         </div>
 
-        <div className="grid md:grid-cols-12 gap-10 items-start">
-          <p className="md:col-span-7 font-display text-lg md:text-2xl leading-snug text-forest/80 text-pretty">
-            La plupart des entreprises n'ont pas besoin d'une nouvelle stratégie. Elles ont besoin d'une architecture qui tient    un cadre où la stratégie peut enfin produire. EIDEN conçoit ce cadre.
-          </p>
-
-          <ul className="md:col-span-5 grid grid-cols-2 gap-3">
+        <div>
+          <ul className="md:col-span- grid grid-cols-1 md:grid-cols-4 gap-3">
             {STATS.map((s, i) => (
               <motion.li
                 key={s.k}
@@ -50,11 +46,12 @@ export function Reframe({ onCommission }: { onCommission: () => void }) {
         </div>
 
         <div className="mt-14 flex justify-center">
-          <button onClick={onCommission} className="inline-flex items-center gap-3 rounded-full border border-forest/30 px-6 py-3.5 font-head text-sm text-forest hover:bg-forest hover:text-canvas transition focus-ring">
-            Réserver mon appel gratuit
-            <span>→</span>
-          </button>
+          <button onClick={() => onCommission()} className="group inline-flex items-center gap-3 rounded-full bg-forest px-7 py-4 font-head text-sm font-medium text-canvas hover:bg-mondrian-red transition focus-ring">
+              Réserver mon appel découverte
+              <span className="grid place-items-center h-7 w-7 rounded-full bg-canvas/15 transition group-hover:bg-canvas/25">→</span>
+            </button>
         </div>
+
       </div>
     </section>
   );

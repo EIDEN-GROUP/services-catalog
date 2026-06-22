@@ -44,7 +44,7 @@ export function Hero({ onCommission }: { onCommission: () => void }) {
       <motion.div
         initial={{ scaleY: 0 }} animate={{ scaleY: 1 }} transition={{ duration: 1.2, delay: 0.35 }}
         style={{ originY: 0 }}
-        className="absolute bottom-0 top-[28vh] left-[34vw] w-[2px] mondrian-rule md:top-[24vh]"
+        className="absolute bottom-0 top-[28vh] left-[34vw] w-[2px] mondrian-rule md:top-[24vh] hidden md:block"
       />
 
       <motion.div style={{ y }} className="relative z-10 mx-auto max-w-[1400px] px-5 md:px-10 pt-24 md:pt-16 pb-16 md:pb-20 md:min-h-[88svh] flex flex-col">
@@ -87,7 +87,7 @@ export function Hero({ onCommission }: { onCommission: () => void }) {
           </motion.p>
 
           <motion.div initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }} transition={{ delay: 1.55, duration:0.8 }} className="md:col-span-4 md:col-start-7 flex flex-col gap-3">
-            <button onClick={onCommission} className="group inline-flex items-center justify-between gap-3 rounded-full bg-forest px-7 py-4 font-head text-sm font-medium text-canvas hover:bg-teal transition focus-ring">
+            <button onClick={onCommission} className="group inline-flex items-center justify-between gap-3 rounded-full bg-forest px-7 py-4 font-head text-sm font-medium text-canvas hover:bg-mondrian-red transition focus-ring">
               <span>Réserver mon appel gratuit</span>
               <span className="grid place-items-center h-7 w-7 rounded-full bg-canvas/15 group-hover:bg-canvas/25 transition">→</span>
             </button>
