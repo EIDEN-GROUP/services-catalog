@@ -47,7 +47,7 @@ export function Hero({ onCommission }: { onCommission: () => void }) {
         className="absolute bottom-0 top-[28vh] left-[34vw] w-[2px] mondrian-rule md:top-[24vh] hidden md:block"
       />
 
-      <motion.div style={{ y }} className="relative z-10 mx-auto max-w-[1400px] px-5 md:px-10 pt-24 md:pt-16 pb-16 md:pb-20 md:min-h-[88svh] flex flex-col">
+      <motion.div style={{ y }} className="relative z-10 mx-auto max-w-[1400px] px-5 md:px-10 pt-24 md:pt-16 pb-16 md:pb-20 md:min-h-[88svh] flex flex-col justify-around h-screen">
         
         {/* top meta row   Swiss */}
         {/* <div className="flex items-start justify-between gap-6 mb-12 md:mb-20">
@@ -67,23 +67,49 @@ export function Hero({ onCommission }: { onCommission: () => void }) {
         </div> */}
 
         {/* headline */}
-        <h1 className="font-display font-light text-[clamp(2.25rem,7vw,6.25rem)] leading-[0.92] tracking-[-0.03em] text-balance max-w-[14ch]">
-          {"Pas un problème de".split(" ").map((w, i) => (
-            <motion.span key={i} initial={{ opacity:0, y:60 }} animate={{ opacity:1, y:0 }} transition={{ delay: 0.4 + i*0.08, duration: 0.9, ease:[0.22,1,0.36,1] }} className="inline-block mr-[0.25em]">{w}</motion.span>
-          ))}
-          <br />
-          <motion.span initial={{ opacity:0, y:60 }} animate={{ opacity:1, y:0 }} transition={{ delay: 0.85, duration: 0.9 }} className="inline-block mr-[0.25em]">stratégie.</motion.span>
-          <br />
-          <motion.span initial={{ opacity:0, y:60 }} animate={{ opacity:1, y:0 }} transition={{ delay: 1.0, duration: 1 }} className="font-display-wonk italic text-teal">
-            Un problème de structure
-          </motion.span>
-          <motion.span initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay: 1.4 }} className="text-mondrian-red">.</motion.span>
+        <h1 className="font-display font-light text-[clamp(2.25rem,5.5vw,5rem)] leading-[0.92] tracking-[-0.03em]">
+
+          {/* ── Line 1: "Pas un problème de stratégie." ── */}
+          <span className="block">
+            {"Pas un problème de stratégie.".split(" ").map((w, i) => (
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, y: 60 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 + i * 0.08, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+                className="inline-block mr-[0.25em]"
+              >
+                {w}
+              </motion.span>
+            ))}
+          </span>
+
+          {/* ── Line 2: italic contrast phrase ── */}
+          <span className="block">
+            <motion.span
+              initial={{ opacity: 0, y: 60 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.0, duration: 1 }}
+              className="font-display-wonk italic text-teal"
+            >
+              Un problème de structure
+            </motion.span>
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.4 }}
+              className="text-mondrian-red"
+            >
+              .
+            </motion.span>
+          </span>
+
         </h1>
 
         {/* deck row */}
-        <div className="mt-12 md:mt-auto md:pt-10 grid md:grid-cols-12 gap-8 items-end">
-          <motion.p initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }} transition={{ delay: 1.4, duration:0.8 }} className="md:col-span-5 font-display text-xl md:text-2xl leading-[1.35] text-gold">
-            Réservez un appel gratuit de 30 minutes avec EIDEN   le premier cabinet d'Architecture d'Entreprise au Maroc   et voyez exactement où la vôtre se fissure.
+        <div className="md:pt-10 grid md:grid-cols-12 gap-8 items-end">
+          <motion.p initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }} transition={{ delay: 1.4, duration:0.8 }} className="md:col-span-5 font-display text-xl md:text-2xl leading-[1.35] text-gold-dk">
+            Réservez 30 minutes avec EIDEN, premier cabinet d'Architecture d'Entreprise au Maroc. On vous dit exactement où votre structure se fracture.
           </motion.p>
 
           <motion.div initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }} transition={{ delay: 1.55, duration:0.8 }} className="md:col-span-4 md:col-start-7 flex flex-col gap-3">

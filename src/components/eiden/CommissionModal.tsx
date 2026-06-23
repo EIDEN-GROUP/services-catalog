@@ -94,9 +94,9 @@ export function CommissionModal({
             animate={{ y: 0, opacity: 1, scale: 1 }}
             exit={{ y: 30, opacity: 0, scale: 0.98 }}
             transition={{ duration: 0.45, ease: [0.22,1,0.36,1] }}
-            className="relative z-10 w-full max-w-6xl my-auto grid md:grid-cols-12 rounded-none md:rounded-3xl overflow-hidden glass shadow-2xl"
+            className="relative z-10 w-full h-full md:h-auto md:max-w-6xl md:my-auto flex flex-col md:grid md:grid-cols-12 rounded-none md:rounded-3xl overflow-hidden glass shadow-2xl"
           >
-            {/* SIDE   animated scenes */}
+            {/* SIDE – compact strip on mobile (top), full panel on md+ (left) */}
             <div className="relative md:col-span-5 min-h-[180px] md:min-h-[640px] bg-forest text-canvas overflow-hidden">
               <SceneVideo />
               <div className="relative z-10 h-full flex flex-col justify-between p-8 md:p-10">
@@ -126,11 +126,26 @@ export function CommissionModal({
               </div>
             </div>
 
-            {/* MAIN   form */}
-            <div className="relative md:col-span-7 bg-canvas/95 p-6 md:p-10 max-h-[100vh] md:max-h-[640px] overflow-y-auto">
+            {/* MAIN – form: flex-1 fills full screen on mobile, col-span-7 on md+ */}
+            <div className="relative flex-1 md:col-span-7 bg-canvas/95 p-6 md:p-10 overflow-y-auto md:max-h-[640px]">
+
+              {/* Mobile close — absolute top-right, always reachable */}
+              <button
+                onClick={onClose}
+                aria-label="Fermer"
+                className="md:hidden absolute top-4 right-4 z-10 grid place-items-center h-9 w-9 rounded-full border border-forest/15 bg-canvas/80 backdrop-blur-sm hover:bg-forest hover:text-canvas transition"
+              >
+                <X className="h-4 w-4" />
+              </button>
+
               <div className="flex items-center justify-between mb-8">
                 <Stepper step={step} />
-                <button onClick={onClose} aria-label="Fermer" className="grid place-items-center h-9 w-9 rounded-full border border-forest/15 hover:bg-forest hover:text-canvas transition">
+                {/* Desktop close — inline with stepper */}
+                <button
+                  onClick={onClose}
+                  aria-label="Fermer"
+                  className="hidden md:grid place-items-center h-9 w-9 rounded-full border border-forest/15 hover:bg-forest hover:text-canvas transition"
+                >
                   <X className="h-4 w-4" />
                 </button>
               </div>
@@ -299,14 +314,16 @@ function Field({ label, v, onChange, type = "text", textarea, required }: {
 function Stepper({ step }: { step: number }) {
   const labels = ["Services", "Cadre", "Identité", "Envoyé"];
   return (
-    <div className="flex items-center gap-3 font-mono text-[10px] text-forest/60">
+    <div className="flex items-center gap-1.5 sm:gap-3 font-mono text-[10px] text-forest/60 w-full overflow-hidden">
       {labels.map((l, i) => (
-        <div key={l} className="flex items-center gap-2">
-          <span className={`grid place-items-center h-6 w-6 rounded-full border text-[10px] transition ${
+        <div key={l} className="flex items-center gap-1 sm:gap-2 shrink-0">
+          {/* circle — never shrinks */}
+          <span className={`grid place-items-center h-6 w-6 shrink-0 rounded-full border text-[10px] transition ${
             i === step ? "bg-forest text-canvas border-forest" :
             i < step ? "bg-teal text-canvas border-teal" : "border-forest/20"
           }`}>{i < step ? "✓" : i + 1}</span>
-          <span className={i === step ? "text-forest" : ""}>{l}</span>
+          {/* label — hidden on xs, visible sm+ */}
+          <span className={`hidden sm:inline ${i === step ? "text-forest" : ""}`}>{l}</span>
           {i < labels.length - 1 && <span className="text-forest/20">/</span>}
         </div>
       ))}

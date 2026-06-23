@@ -94,21 +94,16 @@ const ACCENT_STYLES: Record<
   },
 };
 
-export function Problems() {
+export function Problems({ onCommission }: { onCommission: () => void }) {
   const trackRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
-  const [progress, setProgress] = useState(0);
 
   // Dynamic parallax blobs tracking pointer coordinates
   const pointerX = useMotionValue(0);
   const pointerY = useMotionValue(0);
   const springX = useSpring(pointerX, { stiffness: 100, damping: 20, mass: 0.5 });
   const springY = useSpring(pointerY, { stiffness: 100, damping: 20, mass: 0.5 });
-  
-  const blobXLeft = useTransform(springX, (val) => val * -22);
-  const blobYLeft = useTransform(springY, (val) => val * -22);
-  const blobXRight = useTransform(springX, (val) => val * 32);
-  const blobYRight = useTransform(springY, (val) => val * 32);
+
 
   // Get expected scroll placement for any card index based on custom boundaries
   const getScrollLeftForIndex = useCallback((targetIndex: number) => {
@@ -418,6 +413,13 @@ export function Problems() {
       <style>{`
         .no-scrollbar::-webkit-scrollbar { display: none; }
       `}</style>
+
+       <div className="mt-14 flex justify-center">
+          <button onClick={() => onCommission()} className="group inline-flex items-center gap-3 rounded-full bg-forest px-7 py-4 font-head text-sm font-medium text-canvas hover:bg-mondrian-red transition focus-ring">
+              Réserver mon appel découverte
+              <span className="grid place-items-center h-7 w-7 rounded-full bg-canvas/15 transition group-hover:bg-canvas/25">→</span>
+            </button>
+        </div>
     </section>
   );
 }
