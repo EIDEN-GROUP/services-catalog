@@ -10,9 +10,9 @@ const CONTACTS = [
 export function Footer() {
   return (
     <footer className="bg-canvas text-forest border-t-2 border-forest">
-      <div className="mx-auto max-w-[1400px] px-5 md:px-10 py-8">
+      <div className="mx-auto max-w-[1400px] px-5 md:px-10 pt-8 pb-4">
         {/* Top row: Logo + Contacts */}
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8 mb-10 pb-8 border-b border-forest/10">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8 mb-4 pb-8 border-b border-forest/10">
           <div className="flex items-center gap-3">
             <span className="grid place-items-center h-10 w-10 rounded-md bg-forest shrink-0">
               <img src={icon} alt="" className="h-7 w-7" style={{ filter: "brightness(0) invert(0.93) sepia(0.3) saturate(2)" }} />

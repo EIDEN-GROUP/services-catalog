@@ -3,30 +3,30 @@ import { useState, useEffect } from "react";
 import { Check } from "lucide-react";
 
 const SERVICES = [
-  "Audit & Diagnostic",
-  "Architecture Stratégique",
-  "Optimisation Opérationnelle",
-  "Génération de Leads & Achat Média",
-  "Référencement Local & Digital",
-  "CRM · Relation Client",
-  "Branding & Positionnement",
-  "Développement Web",
+  "Marque & Identité",
+  "Site Web & Développement",
+  "Photo & Vidéo",
+  "Marketing & Acquisition",
+  "IA & Automatisation",
+  "Conseil & Organisation",
+  "Logiciels propriétaires (abonnement léger)",
 ];
 
-const BUDGETS = ["<800 MAD", "800 – 1000 MAD", "1000 – 3000 MAD", "+3000 MAD"];
+const BUDGETS = ["<8000 DH", "8000 – 15000 DH", "15000 – 50000 DH", "+50000 DH"];
 const TIMELINES = ["Immédiat", "< 1 mois", "1 – 3 mois", "Exploration"];
 
 type Form = {
   services: string[];
   budget: string;
   timeline: string;
+  preferredDate: string;
   name: string;
   email: string;
   company: string;
   brief: string;
 };
 
-const empty: Form = { services: [], budget: "", timeline: "", name: "", email: "", company: "", brief: "" };
+const empty: Form = { services: [], budget: "", timeline: "", preferredDate: "", name: "", email: "", company: "", brief: "" };
 
 export function HowItWorks({
   initialService,
@@ -60,12 +60,12 @@ export function HowItWorks({
   const canNext =
     (step === 0 && form.services.length > 0) ||
     (step === 1 && form.budget && form.timeline) ||
-    (step === 2 && form.name && form.email && form.brief);
+    (step === 2 && form.name && form.email && form.preferredDate && form.brief);
 
   const submit = () => {
     const subject = encodeURIComponent(`Commission   ${form.name}${form.company ? " · " + form.company : ""}`);
     const body = encodeURIComponent(
-      `Services: ${form.services.join(", ")}\nBudget: ${form.budget}\nTimeline: ${form.timeline}\n\nNom: ${form.name}\nEmail: ${form.email}\nEntreprise: ${form.company}\n\nBrief:\n${form.brief}`
+      `Services: ${form.services.join(", ")}\nBudget: ${form.budget}\nTimeline: ${form.timeline}\nDate souhaitée: ${form.preferredDate}\n\nNom: ${form.name}\nEmail: ${form.email}\nEntreprise: ${form.company}\n\nBrief:\n${form.brief}`
     );
     window.location.href = `mailto:contact@eiden-group.com?subject=${subject}&body=${body}`;
     setSent(true);
@@ -75,15 +75,11 @@ export function HowItWorks({
   return (
     <section id="contact" className="relative bg-forest text-canvas py-24 md:py-36 overflow-hidden grain">
       <div className="absolute inset-0 paper-grid opacity-[0.06]" />
-      <div className="absolute top-0 left-0 h-2 w-full bg-mondrian-yellow md:w-1/4" />
-      <div className="absolute top-0 left-96 w-2 h-3/5 bg-mondrian-red md:left-1/4 md:h-1/3" />
+      <div className="absolute top-0 left-0 h-2 w-full bg-mondrian-yellow" />
+      <div className="absolute top-0 left-96 w-2 h-3/5 bg-mondrian-red md:left-5/6 md:h-1/3" />
 
       <div className="relative z-10 mx-auto max-w-[1400px] px-5 md:px-10">
-        <div className="grid md:grid-cols-12 gap-8 mb-16 pb-10">
-          <div className="md:col-span-3 font-mono text-[10px] text-canvas/70">
-            <div>SECTION 02</div>
-            <div className="mt-1">CONTACT</div>
-          </div>
+        <div className="mb-16 pb-10">
           <h2 className="md:col-span-9 font-display font-light text-[clamp(1.75rem,4vw,3.5rem)] leading-[0.92] tracking-[-0.03em] text-balance">
             30 minutes pour voir où votre activité <span className="font-display-wonk italic text-gold">fuit</span>
             <span className="text-mondrian-red">.</span>
@@ -165,16 +161,23 @@ export function HowItWorks({
 
                 {step === 2 && (
                   <Step key="s2">
-                      <div className="grid sm:grid-cols-2 gap-4">
+                    <div className="grid sm:grid-cols-2 gap-4">
                       <Field label="Nom" v={form.name} onChange={(v) => setForm({ ...form, name: v })} required />
                       <Field label="Email" type="email" v={form.email} onChange={(v) => setForm({ ...form, email: v })} required />
-                      </div>
-                      <div className="mt-4">
+                    </div>
+                    <div className="mt-4 grid sm:grid-cols-2 gap-4">
                       <Field label="Entreprise" v={form.company} onChange={(v) => setForm({ ...form, company: v })} />
-                      </div>
-                      <div className="mt-4">
+                      <Field
+                        label="Date souhaitée pour démarrer"
+                        type="date"
+                        v={form.preferredDate}
+                        onChange={(v) => setForm({ ...form, preferredDate: v })}
+                        required
+                      />
+                    </div>
+                    <div className="mt-4">
                       <Field label="Brief" textarea v={form.brief} onChange={(v) => setForm({ ...form, brief: v })} required />
-                      </div>
+                    </div>
                   </Step>
                 )}
 

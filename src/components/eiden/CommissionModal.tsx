@@ -3,30 +3,30 @@ import { useEffect, useState } from "react";
 import { X, Check } from "lucide-react";
 
 const SERVICES = [
-  "Audit & Diagnostic",
-  "Architecture Stratégique",
-  "Optimisation Opérationnelle",
-  "Génération de Leads & Achat Média",
-  "Référencement Local & Digital",
-  "CRM · Relation Client",
-  "Branding & Positionnement",
-  "Développement Web",
+  "Marque & Identité",
+  "Site Web & Développement",
+  "Photo & Vidéo",
+  "Marketing & Acquisition",
+  "IA & Automatisation",
+  "Conseil & Organisation",
+  "Logiciels propriétaires (abonnement léger)",
 ];
 
-const BUDGETS = ["< 25k MAD", "25 – 75k MAD", "75 – 200k MAD", "200k+ MAD"];
+const BUDGETS = ["<8000 DH", "8000 – 15000 DH", "15000 – 50000 DH", "+50000 DH"];
 const TIMELINES = ["Immédiat", "< 1 mois", "1 – 3 mois", "Exploration"];
 
 type Form = {
   services: string[];
   budget: string;
   timeline: string;
+  preferredDate: string;
   name: string;
   email: string;
   company: string;
   brief: string;
 };
 
-const empty: Form = { services: [], budget: "", timeline: "", name: "", email: "", company: "", brief: "" };
+const empty: Form = { services: [], budget: "", timeline: "", preferredDate: "", name: "", email: "", company: "", brief: "" };
 
 export function CommissionModal({
   open,
@@ -62,12 +62,12 @@ export function CommissionModal({
   const canNext =
     (step === 0 && form.services.length > 0) ||
     (step === 1 && form.budget && form.timeline) ||
-    (step === 2 && form.name && form.email && form.brief);
+    (step === 2 && form.name && form.email && form.preferredDate && form.brief);
 
   const submit = () => {
     const subject = encodeURIComponent(`Commission   ${form.name}${form.company ? " · " + form.company : ""}`);
     const body = encodeURIComponent(
-      `Services: ${form.services.join(", ")}\nBudget: ${form.budget}\nTimeline: ${form.timeline}\n\nNom: ${form.name}\nEmail: ${form.email}\nEntreprise: ${form.company}\n\nBrief:\n${form.brief}`
+      `Services: ${form.services.join(", ")}\nBudget: ${form.budget}\nTimeline: ${form.timeline}\nDate souhaitée: ${form.preferredDate}\n\nNom: ${form.name}\nEmail: ${form.email}\nEntreprise: ${form.company}\n\nBrief:\n${form.brief}`
     );
     window.location.href = `mailto:contact@eiden-group.com?subject=${subject}&body=${body}`;
     setSent(true);
@@ -192,8 +192,15 @@ export function CommissionModal({
                       <Field label="Nom" v={form.name} onChange={(v) => setForm({ ...form, name: v })} required />
                       <Field label="Email" type="email" v={form.email} onChange={(v) => setForm({ ...form, email: v })} required />
                     </div>
-                    <div className="mt-4">
+                    <div className="mt-4 grid sm:grid-cols-2 gap-4">
                       <Field label="Entreprise" v={form.company} onChange={(v) => setForm({ ...form, company: v })} />
+                      <Field
+                        label="Date souhaitée pour démarrer"
+                        type="date"
+                        v={form.preferredDate}
+                        onChange={(v) => setForm({ ...form, preferredDate: v })}
+                        required
+                      />
                     </div>
                     <div className="mt-4">
                       <Field label="Brief" textarea v={form.brief} onChange={(v) => setForm({ ...form, brief: v })} required />

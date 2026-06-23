@@ -26,7 +26,7 @@ export const SERVICES = [
   {
     n: "02",
     t: "Site Web & Développement",
-    d: "La clé de voûte de votre présence numérique. Des plateformes ultra-performantes, conçues avec l'exigence du design suisse : vélocité absolue, accessibilité impeccable et taux de conversion d'élite.",
+    d: "Nous développons des sites internet ultra-rapides, modernes et faciles d'accès, conçus spécifiquement pour transformer vos visiteurs en clients.",
     img: svcWeb,
     items: [
       "Page unique (landing page)",
@@ -38,7 +38,7 @@ export const SERVICES = [
   {
     n: "03",
     t: "Photo & Vidéo",
-    d: "La narration visuelle par excellence. Nous matérialisons votre univers avec des séances de prise de vue rigoureuses, des packs vidéo taillés pour l'acquisition et des présentations corporate cinématographiques.",
+    d: "Nous mettons en valeur votre entreprise grâce à des photos de haute qualité, des vidéos publicitaires captivantes et des présentations d'entreprise au rendu cinéma.",
     img: svcAudit, // mapped to Photo & Vidéo as per user requirement to preserve images
     items: [
       "Shooting photo ½ journée",
@@ -49,11 +49,11 @@ export const SERVICES = [
   {
     n: "04",
     t: "Marketing & Acquisition",
-    d: "Vos systèmes de conquête commerciale. Des funnels optimisés au pixel près, des campagnes d'acquisition agressives et un positionnement SEO dominant pour capter l'intérêt de vos futurs ambassadeurs.",
+    d: "Nous créons vos publicités sur les réseaux sociaux, trouvons de nouveaux clients et améliorons votre position sur Google pour qu'on vous trouve facilement.",
     img: svcLeads, // keeping seo image imported in file structure as reference
     items: [
-      "Réseaux sociaux — Essentiel",
-      "Réseaux sociaux — Standard",
+      "Réseaux sociaux Essentiel",
+      "Réseaux sociaux Standard",
       "Référencement Google (SEO)",
       "Publicité en ligne (Meta / Google)",
       "Génération de prospects (leads)",
@@ -63,7 +63,7 @@ export const SERVICES = [
   {
     n: "05",
     t: "IA & Automatisation",
-    d: "L'organisation libérée de tout goulot d'étranglement. Nous connectons vos applications, automatisons les flux répétitifs et deploierons des agents conversationnels de pointe pour démultiplier la productivité.",
+    d: "Nous connectons vos logiciels entre eux et installons des robots de discussion automatiques pour vous faire gagner du temps au quotidien.",
     img: svcOps,
     items: [
       "Automatiser une tâche / un workflow",
@@ -74,7 +74,7 @@ export const SERVICES = [
   {
     n: "06",
     t: "Conseil & Organisation",
-    d: "La consolidation de vos fondations opérationnelles. Analyse fine de vos workflows, encadrement mensuel et programmes d'alignement pour outiller vos équipes de la rigueur opérationnelle Eiden.",
+    d: "Nous étudions votre façon de travailler et nous vous aidons chaque mois à améliorer votre organisation pour travailler plus vite et sans stress.",
     img: svcArch,
     items: [
       "Workflows & gestion des opérations",
@@ -86,7 +86,7 @@ export const SERVICES = [
   {
     n: "07",
     t: "Logiciels propriétaires (abonnement léger)",
-    d: "Votre arsenal technologique personnalisé sous abonnement léger. Pilotez votre organisme avec nos CRM d'écoles, nos logiciels BMS ou nos portails de réservation intelligents créés entièrement sur-mesure.",
+    d: "Nous créons des outils informatiques rien que pour vous (système de réservation, gestion d'école, etc.) sous forme d'un petit abonnement mensuel.",
     img: svcCrm, // svcCrm used for CRM & Software
     items: [
       "Gestion d'entreprise (BMS)",
@@ -128,11 +128,7 @@ export function Services({ onCommission }: { onCommission: (service?: string) =>
     <section id="services" className="relative bg-canvas py-12 px-4 md:px-8 border-t border-forest/10 overflow-hidden">
       <div className="mx-auto max-w-[1400px]">
         {/* Editorial header - Swiss split */}
-        <div id="services-header" className="grid md:grid-cols-12 gap-6 mb-8 pb-6 border-b border-forest/20">
-          <div className="md:col-span-3 font-mono text-[10px] text-forest/70 uppercase tracking-widest">
-            <div>SECTION 06 / PORTFOLIO</div>
-            <div className="mt-1">PORT DE SERVICES 07</div>
-          </div>
+        <div id="services-header" className="mb-8 pb-6 border-b border-forest/20">
           <h2 className="md:col-span-9 font-display font-light text-[clamp(1.75rem,4vw,3rem)] leading-[0.92] tracking-[-0.03em] text-balance text-forest">
             Là où votre activité <span className="font-display-wonk italic text-teal">se déploie</span>
             <span className="text-mondrian-red font-bold font-sans">.</span>

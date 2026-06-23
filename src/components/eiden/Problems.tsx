@@ -237,11 +237,7 @@ export function Problems({ onCommission }: { onCommission: () => void }) {
       
 
       <div className="relative mx-auto max-w-[1400px] px-6 md:px-12">
-        <div className="grid md:grid-cols-12 gap-8 mb-12 pb-8 border-b-2 border-forest">
-          <div className="md:col-span-3 font-mono text-[10px] text-forest/70">
-            <div>SECTION 02</div>
-            <div className="mt-1">Symptômes</div>
-          </div>
+        <div className="mb-12 pb-8 border-b-2 border-forest">
           <h2 className="md:col-span-9 font-display font-light text-[clamp(1.75rem,4vw,3.5rem)] leading-[0.95] tracking-[-0.03em] text-balance">
             Reconnaissez-vous l'un de ces <span className="font-display-wonk italic text-teal">signaux</span>
             <span className="text-mondrian-red">?</span>

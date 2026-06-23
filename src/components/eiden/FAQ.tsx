@@ -34,13 +34,13 @@ export function FAQ({ onCommission }: { onCommission: () => void }) {
     setOpen((o) => (o.includes(i) ? o.filter((x) => x !== i) : [...o, i]));
 
   return (
-    <section id="faq" className="relative bg-cream py-20 md:py-28">
+    <section id="faq" className="relative bg-cream py-20 md:py-28 overflow-hidden">
+      <div className="absolute top-0 left-0 h-1.5 w-full bg-forest" />
+      <div className="absolute top-0 left-1/3 h-1.5 w-1/3" style={{ background: "#0E7A73" }} />
+      <div className="absolute top-0 right-0 h-1.5 w-[12%]" style={{ background: "#CFC292" }} />
+
       <div className="mx-auto max-w-[1400px] px-5 md:px-10">
-        <div className="grid md:grid-cols-12 gap-8 mb-12 pb-8 border-b-2 border-forest">
-          <div className="md:col-span-3 font-mono text-[10px] text-forest/70">
-            <div>SECTION 03</div>
-            <div className="mt-1">FAQ 05</div>
-          </div>
+        <div className="mb-12 pb-8 border-b-2 border-forest">
           <h2 className="md:col-span-9 font-display font-light text-[clamp(1.75rem,4vw,3.5rem)] leading-[0.95] tracking-[-0.03em] text-balance">
             Les questions qu'on nous pose <span className="font-display-wonk italic text-teal">avant l'appel</span>
             <span className="text-mondrian-red">.</span>

@@ -49,11 +49,11 @@ function Index() {
             <Problems onCommission={() => start()} />
             <HowItWorks onCommission={() => start()} />
             {/* <Testimonials onCommission={() => start()} /> */}
-            <FAQ onCommission={() => start()} />
             {/* <Contact onCommission={() => start()} /> */}
-            <Reframe onCommission={() => start()} />
-            <BandBrands />
+            {/* <Reframe onCommission={() => start()} /> */}
             <Services onCommission={start} />
+            <FAQ onCommission={() => start()} />
+            <BandBrands />
             <Footer />
             <CommissionModal open={open} onClose={() => setOpen(false)} initialService={service} />
             {/* <ChatWidget onCommission={() => start()} /> */}
