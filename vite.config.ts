@@ -12,4 +12,8 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  // Enable Nitro deploy plugin with Vercel preset for SSR on Vercel
+  nitro: {
+    preset: "vercel",
+  },
 });
