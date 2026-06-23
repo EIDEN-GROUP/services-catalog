@@ -49,7 +49,7 @@ export const SERVICES = [
   {
     n: "04",
     t: "Marketing & Acquisition",
-    d: "Nous créons vos publicités sur les réseaux sociaux, trouvons de nouveaux clients et améliorons votre position sur Google pour qu'on vous trouve facilement.",
+    d: "Déploiement publicitaire ciblé sur les réseaux sociaux, génération de leads stratégiques et optimisation de votre présence Google pour garantir un positionnement de premier plan.",
     img: svcLeads, // keeping seo image imported in file structure as reference
     items: [
       "Réseaux sociaux Essentiel",
@@ -63,7 +63,7 @@ export const SERVICES = [
   {
     n: "05",
     t: "IA & Automatisation",
-    d: "Nous connectons vos logiciels entre eux et installons des robots de discussion automatiques pour vous faire gagner du temps au quotidien.",
+    d: "Nous orchestrons l'intégration systémique de vos logiciels et déployons des agents conversationnels intelligents, optimisant vos flux opérationnels pour libérer votre temps au quotidien.",
     img: svcOps,
     items: [
       "Automatiser une tâche / un workflow",
@@ -74,7 +74,7 @@ export const SERVICES = [
   {
     n: "06",
     t: "Conseil & Organisation",
-    d: "Nous étudions votre façon de travailler et nous vous aidons chaque mois à améliorer votre organisation pour travailler plus vite et sans stress.",
+    d: "Nous analysons vos méthodes de travail et coachons vos équipes chaque mois pour rendre votre entreprise plus structurée, efficace et performante.",
     img: svcArch,
     items: [
       "Workflows & gestion des opérations",
