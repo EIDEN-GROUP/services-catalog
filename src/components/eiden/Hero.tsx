@@ -68,7 +68,7 @@ export function Hero({ onCommission }: { onCommission: () => void }) {
       {/* ── Content ────────────────────────────────────────────────── */}
       <motion.div
         style={{ y }}
-        className="relative z-10 mx-auto max-w-[1400px] px-5 md:px-10 pt-24 md:pt-20 pb-16 md:pb-24 md:min-h-[88svh] flex flex-col justify-between h-screen"
+        className="relative z-10 mx-auto max-w-[1400px] px-5 md:px-10 pt-24 md:pt-20 pb-16 md:pb-24 md:min-h-[88svh] flex flex-col justify-between"
       >
 
         {/* headline */}
