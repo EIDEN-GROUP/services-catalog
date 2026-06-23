@@ -101,160 +101,144 @@ Deno.serve(async (req: Request) => {
 });
 
 /* ════════════════════════════════════════════
- *  SHARED EMAIL SHELL — Dark Editorial Edition
- *  Aesthetic: Mondrian clarity · Swiss grid ·
- *  Dark mode · Architectural borders
+ *  ASSET URLs — Replace with your hosted assets
+ *  Logo: wordmark   |   Icon: circular mark
+ * ════════════════════════════════════════════ */
+
+const LOGO_URL = "https://eiden-group.com/f6277845fd7d32545c93f7a66b81f9cfddb143e3.png";
+const ICON_URL = "https://eiden-group.com/icon.png"; // Replace with your actual icon URL
+
+/* ════════════════════════════════════════════
+ *  SHARED EMAIL SHELL — EIDEN Editorial Light
  * ════════════════════════════════════════════ */
 
 type ShellContent = {
   preheader?: string;
-  labelLeft: string;
-  labelRight: string;
+  metaLeft: string;
+  metaRight: string;
+  figureLabel?: string;
   body: string;
 };
 
 function emailShell(content: ShellContent): string {
+  const bg = "#FAF9F6";
+  const fg = "#0E1B15";
+  const fgMuted = "rgba(14,27,21,0.45)";
+  const fgDim = "rgba(14,27,21,0.30)";
+  const lineColor = "rgba(14,27,21,0.08)";
+  const accentTeal = "#0C5657";
+  const accentGold = "#9b8c6b";
+  // oklch(0.180 0.022 165) = dark forest
+  const footerBg = "#0E1B15";
+  const footerFg = "#FAF9F6";
+  const footerFgMuted = "rgba(250,249,246,0.45)";
+  const footerLineColor = "rgba(250,249,246,0.12)";
+
+  const preheaderBlock = content.preheader
+    ? `<div style="display:none;font-size:1px;color:${bg};line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden;">${content.preheader}</div>`
+    : "";
+
+  const figureBlock = content.figureLabel
+    ? `
+          <tr>
+            <td style="padding:16px 0 0;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="font-family:'JetBrains Mono','Courier New',monospace;font-size:8px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:${accentTeal};">
+                    ${content.figureLabel}
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+    `
+    : "";
+
   return `<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="color-scheme" content="light dark" />
-  <meta name="supported-color-schemes" content="light dark" />
+  <meta name="color-scheme" content="light" />
+  <meta name="supported-color-schemes" content="light" />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
-
-    body, table, td, a {
-      -webkit-text-size-adjust: 100%;
-      -ms-text-size-adjust: 100%;
-    }
-    table, td {
-      mso-table-lspace: 0pt;
-      mso-table-rspace: 0pt;
-    }
-    img {
-      -ms-interpolation-mode: bicubic;
-      border: 0;
-      height: auto;
-      line-height: 100%;
-      outline: none;
-      text-decoration: none;
-    }
-    table {
-      border-collapse: collapse !important;
-    }
-
-    .cta-btn:hover {
-      background-color: #0C5657 !important;
-      transition: background-color 0.3s ease !important;
-    }
-    .cta-btn-outline:hover {
-      border-color: #CFC292 !important;
-      color: #CFC292 !important;
-      transition: all 0.3s ease !important;
-    }
+    body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+    table { border-collapse: collapse !important; }
   </style>
-  ${content.preheader ? `<!--[if !mso]><!--><div style="display:none;font-size:1px;color:#0E1B15;line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden;">${content.preheader}</div><!--<![endif]-->` : ""}
+  ${preheaderBlock}
 </head>
-<body style="margin:0;padding:0;background-color:#0A120F;font-family:'Geist','Helvetica Neue',Helvetica,Arial,sans-serif;">
+<body style="margin:0;padding:0;background-color:${bg};font-family:'Geist','Helvetica Neue',Helvetica,Arial,sans-serif;">
 
-  <!--[if mso]>
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#0A120F;"><tr><td align="center">
-  <![endif]-->
-
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#0A120F;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:${bg};">
     <tr>
-      <td align="center" style="padding:48px 16px;">
+      <td align="center" style="padding:48px 20px;">
 
-        <!-- CARD SHELL CONTAINER -->
-        <table role="presentation" width="640" cellpadding="0" cellspacing="0" style="max-width:640px;width:100%;border:1px solid #1A2A22;background-color:#0E1B15;">
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
 
-          <!-- MONDRIAN PALETTE HEADER BARS — Dark Edition -->
+          <!-- Mondrian bars -->
           <tr>
             <td style="padding:0;font-size:1px;line-height:1px;">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;width:100%;">
                 <tr>
-                  <td style="height:4px;background-color:#0E1B15;width:35%;padding:0;"></td>
-                  <td style="height:4px;background-color:#0C5657;width:25%;padding:0;"></td>
-                  <td style="height:4px;background-color:#CFC292;width:15%;padding:0;"></td>
-                  <td style="height:4px;background-color:#E85D4A;width:15%;padding:0;"></td>
-                  <td style="height:4px;background-color:#2B5C8F;width:10%;padding:0;"></td>
+                  <td style="height:3px;background-color:#0E1B15;width:40%;padding:0;"></td>
+                  <td style="height:3px;background-color:#0C5657;width:25%;padding:0;"></td>
+                  <td style="height:3px;background-color:#CFC292;width:20%;padding:0;"></td>
+                  <td style="height:3px;background-color:#E85D4A;width:10%;padding:0;"></td>
+                  <td style="height:3px;background-color:#2B5C8F;width:5%;padding:0;"></td>
                 </tr>
               </table>
             </td>
           </tr>
 
-          <!-- HEADER LABELS — Swiss Editorial -->
+          <!-- LOGO -->
           <tr>
-            <td style="padding:32px 40px 0;background-color:#0E1B15;">
-              <table role="presentation" width="100%">
+            <td style="padding:32px 0 0;">
+              <img src="${LOGO_URL}" alt="EIDEN Group" width="140" style="display:block;max-width:140px;height:auto;" />
+            </td>
+          </tr>
+
+          <!-- Header meta -->
+          <tr>
+            <td style="padding:20px 0 0;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                  <td style="font-family:'JetBrains Mono','Courier New',monospace;font-size:9px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:#CFC292;">
-                    ${content.labelLeft}
+                  <td style="font-family:'JetBrains Mono','Courier New',monospace;font-size:9px;font-weight:500;letter-spacing:2.8px;text-transform:uppercase;color:${fgMuted};">
+                    ${content.metaLeft}
                   </td>
-                  <td align="right" style="font-family:'JetBrains Mono','Courier New',monospace;font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:#3A5A4D;">
-                    ${content.labelRight}
+                  <td align="right" style="font-family:'JetBrains Mono','Courier New',monospace;font-size:9px;font-weight:500;letter-spacing:1.8px;text-transform:uppercase;color:${fgDim};">
+                    ${content.metaRight}
                   </td>
                 </tr>
               </table>
             </td>
           </tr>
 
-          <!-- GRID DIVIDER — Architectural -->
+          <!-- Divider -->
           <tr>
-            <td style="padding:20px 40px 0;background-color:#0E1B15;">
-              <table role="presentation" width="100%">
+            <td style="padding:16px 0 0;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                  <td style="height:1px;background-color:#1A2A22;font-size:1px;line-height:1px;"></td>
+                  <td style="height:1px;background-color:${lineColor};font-size:1px;line-height:1px;"></td>
                 </tr>
               </table>
             </td>
           </tr>
 
-          <!-- BODY CONTENT -->
+          ${figureBlock}
+
+          <!-- Body -->
           <tr>
-            <td style="padding:0 40px;background-color:#0E1B15;">
+            <td style="padding:0;">
               ${content.body}
             </td>
           </tr>
 
-          <!-- SPACER BEFORE FOOTER -->
+          <!-- Spacer -->
           <tr>
-            <td style="height:40px;background-color:#0E1B15;font-size:1px;line-height:1px;"></td>
-          </tr>
-
-          <!-- FOOTER BLOCK — Architectural Border -->
-          <tr>
-            <td style="padding:32px 40px 36px;background-color:#0E1B15;border-top:2px solid #1A2A22;">
-              <table role="presentation" width="100%">
-                <tr>
-                  <td style="font-family:'JetBrains Mono','Courier New',monospace;font-size:9px;line-height:1.7;color:#3A5A4D;letter-spacing:0.5px;">
-                    <strong style="color:#CFC292;font-weight:600;">EIDEN GROUP</strong><br />
-                    Agadir Bay, Technopole<br />
-                    Agadir, Maroc
-                  </td>
-                  <td align="right" style="font-family:'JetBrains Mono','Courier New',monospace;font-size:9px;line-height:1.7;color:#3A5A4D;letter-spacing:0.3px;">
-                    <a href="https://eiden-group.com" style="color:#0C5657;text-decoration:none;font-weight:600;">eiden-group.com</a><br />
-                    <a href="mailto:contact@eiden-group.com" style="color:#3A5A4D;text-decoration:none;">contact@eiden-group.com</a>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-          <!-- BOTTOM MONDRIAN STRIP -->
-          <tr>
-            <td style="padding:0;font-size:1px;line-height:1px;">
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;width:100%;">
-                <tr>
-                  <td style="height:3px;background-color:#2B5C8F;width:10%;padding:0;"></td>
-                  <td style="height:3px;background-color:#E85D4A;width:15%;padding:0;"></td>
-                  <td style="height:3px;background-color:#CFC292;width:15%;padding:0;"></td>
-                  <td style="height:3px;background-color:#0C5657;width:25%;padding:0;"></td>
-                  <td style="height:3px;background-color:#0E1B15;width:35%;padding:0;"></td>
-                </tr>
-              </table>
-            </td>
+            <td style="height:48px;font-size:1px;line-height:1px;"></td>
           </tr>
 
         </table>
@@ -263,16 +247,65 @@ function emailShell(content: ShellContent): string {
     </tr>
   </table>
 
-  <!--[if mso]>
-  </td></tr></table>
-  <![endif]-->
+  <!-- DARK FOOTER WITH ICON — oklch(0.180 0.022 165) -->
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:${footerBg};">
+    <tr>
+      <td align="center" style="padding:40px 20px;">
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+
+          <!-- Icon centered -->
+          <tr>
+            <td align="center" style="padding-bottom:20px;">
+              <img src="${ICON_URL}" alt="EIDEN" width="48" style="display:block;width:48px;height:auto;opacity:0.9;" />
+            </td>
+          </tr>
+
+          <!-- Footer text -->
+          <tr>
+            <td>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="font-family:'JetBrains Mono','Courier New',monospace;font-size:8px;line-height:1.8;color:${footerFgMuted};letter-spacing:0.6px;">
+                    <strong style="color:${footerFg};font-weight:600;">EIDEN GROUP</strong><br />
+                    Agadir Bay, Technopole · Agadir, Maroc
+                  </td>
+                  <td align="right" style="font-family:'JetBrains Mono','Courier New',monospace;font-size:8px;line-height:1.8;color:${footerFgMuted};letter-spacing:0.4px;">
+                    <span style="color:#0C5657;">eiden-group.com</span><br />
+                    <span style="color:#CFC292;">contact@eiden-group.com</span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Bottom rule -->
+          <tr>
+            <td style="padding:24px 0 0;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="height:1px;background-color:${footerLineColor};font-size:1px;line-height:1px;"></td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="padding:16px 0 0;font-family:'JetBrains Mono','Courier New',monospace;font-size:7px;letter-spacing:1px;text-transform:uppercase;color:rgba(250,249,246,0.25);text-align:center;">
+              Architecture d'entreprise · Agadir, Maroc
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
 
 </body>
 </html>`;
 }
 
 /* ════════════════════════════════════════════
- *  ADMIN EMAIL — Dark Editorial
+ *  ADMIN EMAIL — Editorial Commission Document
  * ════════════════════════════════════════════ */
 
 function buildAdminEmailHtml(data: {
@@ -281,76 +314,84 @@ function buildAdminEmailHtml(data: {
 }): string {
   const { name, email, phone, company, services, budget, timeline, preferredDate, brief } = data;
 
-  const rows = [
-    { label: "Nom complet", value: escapeHtml(name), href: undefined },
-    { label: "E-mail", value: escapeHtml(email), href: `mailto:${escapeHtml(email)}` },
-    { label: "Téléphone", value: escapeHtml(phone), href: phone && phone !== "Non renseigné" ? `tel:${escapeHtml(phone)}` : undefined },
-    { label: "Entreprise", value: escapeHtml(company), href: undefined },
-    { label: "Services", value: escapeHtml(services), href: undefined },
-    { label: "Budget", value: escapeHtml(budget), href: undefined },
-    { label: "Horizon", value: escapeHtml(timeline), href: undefined },
-    { label: "Date souhaitée", value: escapeHtml(preferredDate), href: undefined },
+  const fields = [
+    { num: "01", label: "Nom complet", value: escapeHtml(name) },
+    { num: "02", label: "E-mail", value: escapeHtml(email) },
+    { num: "03", label: "Téléphone", value: escapeHtml(phone) },
+    { num: "04", label: "Entreprise", value: escapeHtml(company) },
+    { num: "05", label: "Services", value: escapeHtml(services) },
+    { num: "06", label: "Budget", value: escapeHtml(budget) },
+    { num: "07", label: "Horizon", value: escapeHtml(timeline) },
+    { num: "08", "label": "Date souhaitée", value: escapeHtml(preferredDate) },
   ];
 
+  const fieldsRows = fields.map((f) => `
+                <tr>
+                  <td style="padding:14px 0;border-bottom:1px solid rgba(14,27,21,0.06);">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="36" style="vertical-align:top;padding-top:1px;">
+                          <span style="font-family:'JetBrains Mono','Courier New',monospace;font-size:9px;font-weight:600;color:#0C5657;letter-spacing:1px;">${f.num}</span>
+                        </td>
+                        <td width="120" style="font-family:'JetBrains Mono','Courier New',monospace;font-size:8px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#9b8c6b;vertical-align:top;padding-top:3px;">
+                          ${f.label}
+                        </td>
+                        <td style="font-family:'Geist','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;font-weight:500;line-height:1.5;color:#0E1B15;vertical-align:top;">
+                          ${f.value}
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+  `).join("");
+
   const body = `
-        <!-- SECTION LABEL -->
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:32px;">
+        <!-- TITLE BLOCK -->
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:36px;">
           <tr>
             <td>
-              <p style="margin:0;font-family:'JetBrains Mono','Courier New',monospace;font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#3A5A4D;">
-                Commission · FIG. 01
-              </p>
-            </td>
-          </tr>
-        </table>
-
-        <!-- HEADLINE -->
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:16px;">
-          <tr>
-            <td>
-              <h1 style="margin:0;font-family:'Fraunces',Georgia,serif;font-size:32px;font-weight:600;line-height:1.15;letter-spacing:-0.5px;color:#FAF9F6;">
-                Nouvelle commission<span style="color:#E85D4A;">.</span>
+              <h1 style="margin:0;font-family:'Fraunces',Georgia,serif;font-size:30px;font-weight:400;line-height:1.2;letter-spacing:-0.5px;color:#0E1B15;">
+                Demande de projet<br />
+                <span style="font-weight:600;">reçue</span><span style="color:#E85D4A;">.</span>
               </h1>
-              <p style="margin:14px 0 0;font-family:'Geist','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;line-height:1.7;color:#7A9A8D;">
-                Un prospect a soumis une demande de projet depuis le catalogue de services.
+              <p style="margin:16px 0 0;font-family:'Geist','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;line-height:1.7;color:rgba(14,27,21,0.50);max-width:420px;">
+                Un prospect a soumis une demande depuis le catalogue de services. Lecture personnelle par un associé.
               </p>
             </td>
           </tr>
         </table>
 
-        <!-- DATA CARD — Dark Glass -->
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:28px;border:1px solid #1A2A22;background-color:#0A120F;border-collapse:collapse;">
+        <!-- DIVIDER -->
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:24px;">
           <tr>
-            <td style="padding:4px 0;">
+            <td style="height:1px;background-color:rgba(14,27,21,0.08);font-size:1px;line-height:1px;"></td>
+          </tr>
+        </table>
+
+        <!-- DATA GRID -->
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:24px;">
+          <tr>
+            <td>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
+                ${fieldsRows}
+              </table>
+            </td>
+          </tr>
+        </table>
+
+        <!-- BRIEF SECTION -->
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:32px;">
+          <tr>
+            <td style="padding:28px 32px;background-color:#F5F2EB;border-left:2px solid #0C5657;">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-                ${rows.map((r) => `
                 <tr>
-                  <td style="padding:14px 24px;border-bottom:1px solid #1A2A22;">
-                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-                      <tr>
-                        <td width="140" style="font-family:'JetBrains Mono','Courier New',monospace;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#3A5A4D;vertical-align:top;padding:2px 0;">
-                          ${r.label}
-                        </td>
-                        <td style="font-family:'Geist','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;line-height:1.5;color:#FAF9F6;padding:2px 0;font-weight:500;">
-                          ${r.href ? `<a href="${r.href}" style="color:#0C5657;text-decoration:none;border-bottom:1px solid rgba(12,86,87,0.4);">${r.value}</a>` : r.value}
-                        </td>
-                      </tr>
-                    </table>
+                  <td style="font-family:'JetBrains Mono','Courier New',monospace;font-size:8px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:#0C5657;padding-bottom:12px;">
+                    09 · Brief
                   </td>
                 </tr>
-                `).join("")}
                 <tr>
-                  <td style="padding:20px 24px;">
-                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-                      <tr>
-                        <td width="140" style="font-family:'JetBrains Mono','Courier New',monospace;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#3A5A4D;vertical-align:top;padding:2px 0;">
-                          Brief
-                        </td>
-                        <td style="font-family:'Fraunces',Georgia,serif;font-size:15px;line-height:1.7;color:#FAF9F6;padding:2px 0;white-space:pre-wrap;font-style:italic;">
-                          "${escapeHtml(brief)}"
-                        </td>
-                      </tr>
-                    </table>
+                  <td style="font-family:'Fraunces',Georgia,serif;font-size:15px;line-height:1.8;color:#0E1B15;font-style:italic;white-space:pre-wrap;">
+                    "${escapeHtml(brief)}"
                   </td>
                 </tr>
               </table>
@@ -358,21 +399,16 @@ function buildAdminEmailHtml(data: {
           </tr>
         </table>
 
-        <!-- REPLY BUTTON — Teal Accent -->
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:32px;">
+        <!-- REPLY INFO -->
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:28px;">
           <tr>
-            <td align="left">
-              <table role="presentation" cellpadding="0" cellspacing="0">
-                <tr>
-                  <td style="border-radius:9999px;background-color:#0C5657;" bgcolor="#0C5657">
-                    <a href="mailto:${escapeHtml(email)}"
-                       class="cta-btn"
-                       style="display:inline-block;padding:14px 32px;font-family:'Geist','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#FAF9F6;text-decoration:none;border-radius:9999px;background-color:#0C5657;transition:background-color 0.3s ease;">
-                      Répondre à cette demande →
-                    </a>
-                  </td>
-                </tr>
-              </table>
+            <td style="font-family:'JetBrains Mono','Courier New',monospace;font-size:8px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:rgba(14,27,21,0.30);padding-bottom:8px;">
+              Réponse · Directe
+            </td>
+          </tr>
+          <tr>
+            <td style="font-family:'Geist','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:13px;color:rgba(14,27,21,0.55);line-height:1.6;">
+              Répondre à <span style="color:#0C5657;">${escapeHtml(email)}</span> — sous 24 heures ouvrées.
             </td>
           </tr>
         </table>
@@ -380,141 +416,84 @@ function buildAdminEmailHtml(data: {
 
   return emailShell({
     preheader: `Nouvelle commission de ${name}${company && company !== "Non renseigné" ? ` (${company})` : ""}`,
-    labelLeft: "EIDEN Group",
-    labelRight: "Commission",
+    metaLeft: "EIDEN / COMMISSION",
+    metaRight: "ARCHITECTURE",
+    figureLabel: "FIG. 01 / 01",
     body,
   });
 }
 
 /* ════════════════════════════════════════════
- *  VISITOR CONFIRMATION EMAIL — Dark Editorial
+ *  VISITOR CONFIRMATION — Editorial Document
  * ════════════════════════════════════════════ */
 
 function buildVisitorEmailHtml(name: string): string {
-  const body = `
-        <!-- SECTION LABEL — Swiss Style -->
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:32px;">
-          <tr>
-            <td>
-              <p style="margin:0;font-family:'JetBrains Mono','Courier New',monospace;font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#3A5A4D;">
-                Confirmation · FIG. 01
-              </p>
-            </td>
-          </tr>
-        </table>
+  const steps = [
+    { num: "01", title: "Lecture personnelle", desc: "Un associé lit votre brief personnellement" },
+    { num: "02", title: "Proposition adaptée", desc: "Vous recevez une réponse sous 24 heures ouvrées" },
+    { num: "03", title: "Échange sans engagement", desc: "Diagnostic clair, sans pitch commercial" },
+  ];
 
-        <!-- HEADLINE — Fraunces Display -->
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:16px;">
+  const stepsRows = steps.map((step) => `
           <tr>
-            <td>
-              <h1 style="margin:0;font-family:'Fraunces',Georgia,serif;font-size:36px;font-weight:400;line-height:1.15;letter-spacing:-0.5px;color:#FAF9F6;">
-                Merci,<br />
-                <span style="font-weight:600;color:#0C5657;">${escapeHtml(name)}</span><span style="color:#E85D4A;">.</span>
-              </h1>
-              <p style="margin:18px 0 0;font-family:'Geist','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:15px;line-height:1.7;color:#7A9A8D;">
-                Votre demande de commission a bien été reçue. Un associé EIDEN
-                lira personnellement votre brief et vous répondra sous
-                <strong style="color:#CFC292;font-weight:600;">24 heures ouvrées</strong>.
-              </p>
-            </td>
-          </tr>
-        </table>
-
-        <!-- STEPS CARD — Dark Glass with Teal Accent -->
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:28px;border:1px solid #1A2A22;background-color:#0A120F;border-collapse:collapse;">
-          <tr>
-            <td style="padding:28px 32px;">
+            <td style="padding:16px 0;border-bottom:1px solid rgba(14,27,21,0.06);">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                  <td style="padding-bottom:16px;">
-                    <p style="margin:0;font-family:'JetBrains Mono','Courier New',monospace;font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#3A5A4D;">
-                      Prochaines étapes · 03
+                  <td width="36" style="vertical-align:top;padding-top:1px;">
+                    <span style="font-family:'JetBrains Mono','Courier New',monospace;font-size:9px;font-weight:600;color:#0C5657;letter-spacing:1px;">${step.num}</span>
+                  </td>
+                  <td style="vertical-align:top;">
+                    <p style="margin:0;font-family:'Geist','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;font-weight:600;color:#0E1B15;line-height:1.4;">
+                      ${step.title}
+                    </p>
+                    <p style="margin:4px 0 0;font-family:'Geist','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:12px;font-weight:400;color:rgba(14,27,21,0.45);line-height:1.5;">
+                      ${step.desc}
                     </p>
                   </td>
                 </tr>
-                ${[
-                  "Un associé lit votre brief personnellement",
-                  "Vous recevez une proposition adaptée sous 24h",
-                  "Échange sans engagement"
-                ].map((step, i) => `
-                <tr>
-                  <td style="padding:14px 0;border-bottom:${i < 2 ? "1px solid #1A2A22" : "none"};">
-                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-                      <tr>
-                        <td width="40" style="vertical-align:middle;padding-right:14px;">
-                          <span style="display:inline-block;width:26px;height:26px;line-height:26px;text-align:center;border-radius:50%;background-color:#0C5657;color:#FAF9F6;font-family:'JetBrains Mono','Courier New',monospace;font-size:10px;font-weight:600;">0${i + 1}</span>
-                        </td>
-                        <td style="font-family:'Geist','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;font-weight:500;line-height:1.5;color:#FAF9F6;vertical-align:middle;">
-                          ${step}
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-                `).join("")}
               </table>
+            </td>
+          </tr>
+  `).join("");
+
+  const body = `
+        <!-- TITLE BLOCK — Thank you, [Name]. -->
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:36px;">
+          <tr>
+            <td>
+              <h1 style="margin:0;font-family:'Fraunces',Georgia,serif;font-size:30px;font-weight:400;line-height:1.2;letter-spacing:-0.5px;color:#0E1B15;">
+                Thank you,<br />
+                <span style="font-weight:600;">${escapeHtml(name)}</span><span style="color:#E85D4A;">.</span>
+              </h1>
+              <p style="margin:16px 0 0;font-family:'Geist','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;line-height:1.7;color:rgba(14,27,21,0.50);max-width:420px;">
+                Votre demande a bien été reçue. Un associé EIDEN lira personnellement votre brief et vous répondra sous 24 heures ouvrées.
+              </p>
             </td>
           </tr>
         </table>
 
-        <!-- METRICS STRIP — Landing Page Style -->
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:28px;border-top:1px solid #1A2A22;border-bottom:1px solid #1A2A22;">
+        <!-- DIVIDER -->
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:24px;">
           <tr>
-            <td style="padding:20px 0;">
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-                <tr>
-                  <td width="33%" style="text-align:center;border-right:1px solid #1A2A22;">
-                    <p style="margin:0;font-family:'Fraunces',Georgia,serif;font-size:24px;font-weight:600;color:#CFC292;line-height:1;">24h</p>
-                    <p style="margin:6px 0 0;font-family:'JetBrains Mono','Courier New',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#3A5A4D;">Réponse</p>
-                  </td>
-                  <td width="33%" style="text-align:center;border-right:1px solid #1A2A22;">
-                    <p style="margin:0;font-family:'Fraunces',Georgia,serif;font-size:24px;font-weight:600;color:#CFC292;line-height:1;">30min</p>
-                    <p style="margin:6px 0 0;font-family:'JetBrains Mono','Courier New',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#3A5A4D;">Appel découverte</p>
-                  </td>
-                  <td width="33%" style="text-align:center;">
-                    <p style="margin:0;font-family:'Fraunces',Georgia,serif;font-size:24px;font-weight:600;color:#CFC292;line-height:1;">0€</p>
-                    <p style="margin:6px 0 0;font-family:'JetBrains Mono','Courier New',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#3A5A4D;">Sans engagement</p>
-                  </td>
-                </tr>
-              </table>
-            </td>
+            <td style="height:1px;background-color:rgba(14,27,21,0.08);font-size:1px;line-height:1px;"></td>
           </tr>
         </table>
 
-        <!-- CTA — Teal Solid -->
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:32px;">
+        <!-- NEXT STEPS -->
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:24px;">
           <tr>
-            <td align="left">
-              <table role="presentation" cellpadding="0" cellspacing="0">
-                <tr>
-                  <td style="border-radius:9999px;background-color:#0C5657;" bgcolor="#0C5657">
-                    <a href="https://eiden-group.com"
-                       class="cta-btn"
-                       style="display:inline-block;padding:14px 32px;font-family:'Geist','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#FAF9F6;text-decoration:none;border-radius:9999px;background-color:#0C5657;transition:background-color 0.3s ease;">
-                      Découvrir nos services →
-                    </a>
-                  </td>
-                </tr>
-              </table>
+            <td style="font-family:'JetBrains Mono','Courier New',monospace;font-size:8px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:#0C5657;padding-bottom:16px;">
+              Prochaines étapes
             </td>
           </tr>
+          ${stepsRows}
         </table>
 
-        <!-- SECONDARY CTA — Outline -->
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:14px;">
+        <!-- CLOSING NOTE -->
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:28px;">
           <tr>
-            <td align="left">
-              <table role="presentation" cellpadding="0" cellspacing="0">
-                <tr>
-                  <td style="border-radius:9999px;border:1px solid #3A5A4D;">
-                    <a href="mailto:contact@eiden-group.com"
-                       class="cta-btn-outline"
-                       style="display:inline-block;padding:12px 28px;font-family:'Geist','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:#7A9A8D;text-decoration:none;border-radius:9999px;transition:all 0.3s ease;">
-                      Une question ? Écrivez-nous
-                    </a>
-                  </td>
-                </tr>
-              </table>
+            <td style="font-family:'Fraunces',Georgia,serif;font-size:14px;font-style:italic;line-height:1.7;color:rgba(14,27,21,0.40);">
+              Pas un problème de stratégie. Un problème de structure.
             </td>
           </tr>
         </table>
@@ -522,8 +501,9 @@ function buildVisitorEmailHtml(name: string): string {
 
   return emailShell({
     preheader: `Merci ${name} — Votre commission a bien été reçue`,
-    labelLeft: "EIDEN Group",
-    labelRight: "Confirmation",
+    metaLeft: "EIDEN / COMMISSION",
+    metaRight: "CONFIRMATION",
+    figureLabel: "FIG. 01 / 01",
     body,
   });
 }
