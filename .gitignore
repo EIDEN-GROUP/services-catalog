@@ -19,6 +19,9 @@ dist-ssr
 # Vercel output (build artifact)
 .vercel/output/
 
+# Supabase local config
+supabase/.temp/
+
 # Wrangler / Cloudflare
 .wrangler/
 .dev.vars
