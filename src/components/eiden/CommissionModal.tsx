@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { X, Check } from "lucide-react";
+import { X, Check, AlertCircle } from "lucide-react";
 
 const SERVICES = [
   "Marque & Identité",
@@ -40,6 +40,8 @@ export function CommissionModal({
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<Form>(empty);
   const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (open && initialService && !form.services.includes(initialService)) {
@@ -48,7 +50,7 @@ export function CommissionModal({
   }, [open, initialService]);
 
   useEffect(() => {
-    if (!open) { setStep(0); setSent(false); }
+    if (!open) { setStep(0); setSent(false); setError(""); }
   }, [open]);
 
   useEffect(() => {
@@ -64,14 +66,42 @@ export function CommissionModal({
     (step === 1 && form.budget && form.timeline) ||
     (step === 2 && form.name && form.email && form.preferredDate && form.brief);
 
-  const submit = () => {
-    const subject = encodeURIComponent(`Commission   ${form.name}${form.company ? " · " + form.company : ""}`);
-    const body = encodeURIComponent(
-      `Services: ${form.services.join(", ")}\nBudget: ${form.budget}\nTimeline: ${form.timeline}\nDate souhaitée: ${form.preferredDate}\n\nNom: ${form.name}\nEmail: ${form.email}\nEntreprise: ${form.company}\n\nBrief:\n${form.brief}`
-    );
-    window.location.href = `mailto:contact@eiden-group.com?subject=${subject}&body=${body}`;
-    setSent(true);
-    setStep(3);
+  const submit = async () => {
+    setSubmitting(true);
+    setError("");
+
+    try {
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+      if (!supabaseUrl || !anonKey) {
+        throw new Error("Configuration Supabase manquante. Vérifiez VITE_SUPABASE_URL et VITE_SUPABASE_ANON_KEY.");
+      }
+
+      const res = await fetch(
+        `${supabaseUrl}/functions/v1/email-send-services-catalog`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${anonKey}`,
+          },
+          body: JSON.stringify(form),
+        }
+      );
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || `Erreur serveur (${res.status})`);
+      }
+
+      setSent(true);
+      setStep(3);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Erreur lors de l'envoi. Veuillez réessayer.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -216,7 +246,7 @@ export function CommissionModal({
                       </div>
                       <h4 className="mt-6 font-display text-3xl">Brief transmis.</h4>
                       <p className="mt-3 text-forest/70 max-w-sm mx-auto">
-                        Un membre de l'équipe vous répond sous 24h. Vérifiez votre client mail si la fenêtre ne s'est pas ouverte.
+                        Un membre de l'équipe vous répond sous 24h. Vous allez recevoir un e-mail de confirmation.
                       </p>
                       <button onClick={onClose} className="mt-8 inline-flex items-center gap-2 rounded-full bg-forest text-canvas px-6 py-3 font-head text-sm">
                         Fermer
@@ -247,12 +277,18 @@ export function CommissionModal({
                   ) : (
                     <button
                       onClick={submit}
-                      disabled={!canNext}
+                      disabled={!canNext || submitting}
                       className="inline-flex items-center gap-3 rounded-full bg-mondrian-red px-6 py-3 font-head text-sm text-canvas disabled:opacity-40 hover:bg-forest transition"
                     >
-                      Envoyer la commission →
+                      {submitting ? "Envoi en cours..." : "Envoyer la commission →"}
                     </button>
                   )}
+                </div>
+              )}
+              {error && (
+                <div className="mt-4 flex items-start gap-2 text-mondrian-red text-sm">
+                  <AlertCircle className="h-4 w-4 mt-0.5 shrink-0" />
+                  <span>{error}</span>
                 </div>
               )}
             </div>

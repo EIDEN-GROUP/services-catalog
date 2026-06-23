@@ -1,0 +1,7 @@
+{
+  "name": "email-send-services-catalog",
+  "version": "1.0.0",
+  "imports": {
+    "nodemailer": "npm:nodemailer@6.9.16"
+  }
+}
