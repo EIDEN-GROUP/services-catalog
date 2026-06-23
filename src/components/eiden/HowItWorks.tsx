@@ -8,25 +8,25 @@ const SERVICES = [
   "Photo & Vidéo",
   "Marketing & Acquisition",
   "IA & Automatisation",
-  "Conseil & Organisation",
   "Logiciels propriétaires (abonnement léger)",
 ];
 
 const BUDGETS = ["<8000 DH", "8000 – 15000 DH", "15000 – 50000 DH", "+50000 DH"];
-const TIMELINES = ["Immédiat", "< 1 mois", "1 – 3 mois", "Exploration"];
+const TIMELINES = ["Immédiat", "< 1 mois", "1 – 3 mois"];
 
 type Form = {
   services: string[];
   budget: string;
   timeline: string;
   preferredDate: string;
+  preferredTime: string;
   name: string;
   email: string;
   company: string;
   brief: string;
 };
 
-const empty: Form = { services: [], budget: "", timeline: "", preferredDate: "", name: "", email: "", company: "", brief: "" };
+const empty: Form = { services: [], budget: "", timeline: "", preferredDate: "", preferredTime: "", name: "", email: "", company: "", brief: "" };
 
 export function HowItWorks({
   initialService,
@@ -38,18 +38,15 @@ export function HowItWorks({
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<Form>(empty);
   const [sent, setSent] = useState(false);
+  const [commissionId, setCommissionId] = useState(() =>
+    Math.floor(100000 + Math.random() * 899999)
+  );
 
   useEffect(() => {
     if (initialService && !form.services.includes(initialService)) {
       setForm((f) => ({ ...f, services: [...f.services, initialService] }));
     }
   }, [initialService]);
-
-  const resetForm = () => {
-    setForm(empty);
-    setStep(0);
-    setSent(false);
-  };
 
   const toggleService = (s: string) =>
     setForm((f) => ({
@@ -60,23 +57,31 @@ export function HowItWorks({
   const canNext =
     (step === 0 && form.services.length > 0) ||
     (step === 1 && form.budget && form.timeline) ||
-    (step === 2 && form.name && form.email && form.preferredDate && form.brief);
+    (step === 2 && form.name && form.email && form.preferredDate && form.preferredTime && form.brief);
 
   const submit = () => {
     const subject = encodeURIComponent(`Commission   ${form.name}${form.company ? " · " + form.company : ""}`);
     const body = encodeURIComponent(
-      `Services: ${form.services.join(", ")}\nBudget: ${form.budget}\nTimeline: ${form.timeline}\nDate souhaitée: ${form.preferredDate}\n\nNom: ${form.name}\nEmail: ${form.email}\nEntreprise: ${form.company}\n\nBrief:\n${form.brief}`
+      `Services: ${form.services.join(", ")}\nBudget: ${form.budget}\nTimeline: ${form.timeline}\nDate souhaitée: ${form.preferredDate}\nHeure souhaitée (Maroc, GMT+1): ${form.preferredTime}\n\nNom: ${form.name}\nEmail: ${form.email}\nEntreprise: ${form.company}\n\nBrief:\n${form.brief}`
     );
     window.location.href = `mailto:contact@eiden-group.com?subject=${subject}&body=${body}`;
     setSent(true);
     setStep(3);
   };
 
+  const resetForm = () => {
+    setForm(empty);
+    setSent(false);
+    setStep(0);
+    setCommissionId(Math.floor(100000 + Math.random() * 899999));
+  };
+
   return (
     <section id="contact" className="relative bg-forest text-canvas py-24 md:py-36 overflow-hidden grain">
       <div className="absolute inset-0 paper-grid opacity-[0.06]" />
-      <div className="absolute top-0 left-0 h-2 w-full bg-mondrian-yellow" />
-      <div className="absolute top-0 left-96 w-2 h-3/5 bg-mondrian-red md:left-5/6 md:h-1/3" />
+      <div className="absolute top-0 left-0 h-1.5 w-full" style={{ background: "#0E7A73" }} />
+      <div className="absolute top-0 left-1/3 h-1.5 w-1/3 bg-forest" />
+      <div className="absolute top-0 right-0 h-1.5 w-[12%]" style={{ background: "#CFC292" }} />
 
       <div className="relative z-10 mx-auto max-w-[1400px] px-5 md:px-10">
         <div className="mb-16 pb-10">
@@ -101,13 +106,13 @@ export function HowItWorks({
                   <div className="font-mono text-[10px] text-gold/80 mb-3">FIG. 0{step + 1} / 04</div>
                   <h3 className="font-display font-light text-3xl md:text-5xl leading-[0.95] tracking-tight text-balance">
                     {sent ? (
-                    <>Votre brief est <span className="font-display-wonk italic text-gold">en route.</span></>
+                      <>Votre brief est <span className="font-display-wonk italic text-gold">en route.</span></>
                     ) : step === 0 ? (
-                    <>Choisissez vos <span className="font-display-wonk italic text-gold">disciplines.</span></>
+                      <>Choisissez vos <span className="font-display-wonk italic text-gold">disciplines.</span></>
                     ) : step === 1 ? (
-                    <>Donnez-nous la <span className="font-display-wonk italic text-gold">forme</span> du projet.</>
+                      <>Donnez-nous la <span className="font-display-wonk italic text-gold">forme</span> du projet.</>
                     ) : (
-                    <>Présentez-vous, <span className="font-display-wonk italic text-gold">brièvement.</span></>
+                      <>Présentez-vous, <span className="font-display-wonk italic text-gold">brièvement.</span></>
                     )}
                   </h3>
                   <p className="mt-4 text-canvas/70 text-sm leading-relaxed max-w-sm">
@@ -126,37 +131,37 @@ export function HowItWorks({
               <AnimatePresence mode="wait">
                 {step === 0 && (
                   <Step key="s0">
-                      <Label>Quel(s) service(s) ?</Label>
-                      <div className="mt-4 grid sm:grid-cols-2 gap-2">
+                    <Label>Quel(s) service(s) ?</Label>
+                    <div className="mt-4 grid sm:grid-cols-2 gap-2">
                       {SERVICES.map((s) => {
-                          const on = form.services.includes(s);
-                          return (
+                        const on = form.services.includes(s);
+                        return (
                           <button
-                              key={s}
-                              type="button"
-                              onClick={() => toggleService(s)}
-                              className={`group flex items-center justify-between gap-3 text-left px-4 py-3.5 rounded-xl border transition focus-ring ${
+                            key={s}
+                            type="button"
+                            onClick={() => toggleService(s)}
+                            className={`group flex items-center justify-between gap-3 text-left px-4 py-3.5 rounded-xl border transition focus-ring ${
                               on ? "bg-forest text-canvas border-forest" : "bg-canvas border-forest/15 hover:border-forest/40"
-                              }`}
+                            }`}
                           >
-                              <span className={`font-head text-sm ${on ? "text-canvas" : "text-forest"}`}>{s}</span>
-                              <span className={`grid place-items-center h-5 w-5 rounded-full border ${on ? "bg-gold border-gold text-forest" : "border-forest/30"}`}>
+                            <span className={`font-head text-sm ${on ? "text-canvas" : "text-forest"}`}>{s}</span>
+                            <span className={`grid place-items-center h-5 w-5 rounded-full border ${on ? "bg-gold border-gold text-forest" : "border-forest/30"}`}>
                               {on && <Check className="h-3 w-3" />}
-                              </span>
+                            </span>
                           </button>
-                          );
+                        );
                       })}
-                      </div>
+                    </div>
                   </Step>
                 )}
 
                 {step === 1 && (
-                <Step key="s1">
+                  <Step key="s1">
                     <Label>Budget envisagé</Label>
                     <Pills options={BUDGETS} value={form.budget} onChange={(v) => setForm({ ...form, budget: v })} />
                     <Label className="mt-8">Horizon</Label>
                     <Pills options={TIMELINES} value={form.timeline} onChange={(v) => setForm({ ...form, timeline: v })} />
-                </Step>
+                  </Step>
                 )}
 
                 {step === 2 && (
@@ -165,13 +170,22 @@ export function HowItWorks({
                       <Field label="Nom" v={form.name} onChange={(v) => setForm({ ...form, name: v })} required />
                       <Field label="Email" type="email" v={form.email} onChange={(v) => setForm({ ...form, email: v })} required />
                     </div>
-                    <div className="mt-4 grid sm:grid-cols-2 gap-4">
+                    <div className="mt-4">
                       <Field label="Entreprise" v={form.company} onChange={(v) => setForm({ ...form, company: v })} />
+                    </div>
+                    <div className="mt-4 grid sm:grid-cols-2 gap-4">
                       <Field
                         label="Date souhaitée pour démarrer"
                         type="date"
                         v={form.preferredDate}
                         onChange={(v) => setForm({ ...form, preferredDate: v })}
+                        required
+                      />
+                      <Field
+                        label="Heure souhaitée (Maroc, GMT+1)"
+                        type="time"
+                        v={form.preferredTime}
+                        onChange={(v) => setForm({ ...form, preferredTime: v })}
                         required
                       />
                     </div>
@@ -182,20 +196,60 @@ export function HowItWorks({
                 )}
 
                 {step === 3 && (
-                <Step key="s3">
-                    <div className="py-10 text-center">
-                    <div className="mx-auto grid place-items-center h-16 w-16 rounded-full bg-teal text-canvas">
-                        <Check className="h-7 w-7" />
+                  <Step key="s3">
+                    <div className="relative py-8 md:py-12">
+                      {/* Seal */}
+                      <motion.div
+                        initial={{ scale: 0.6, rotate: -12, opacity: 0 }}
+                        animate={{ scale: 1, rotate: 0, opacity: 1 }}
+                        transition={{ type: "spring", stiffness: 220, damping: 16, delay: 0.05 }}
+                        className="mx-auto relative h-24 w-24"
+                      >
+                        <div className="absolute inset-0 rounded-full bg-teal-lt/10 animate-ping" />
+                        <div className="relative mx-auto grid place-items-center h-24 w-24 rounded-full bg-teal-lt text-canvas shadow-[0_18px_40px_-12px_rgba(0,0,0,0.35)] ring-8 ring-teal-lt/10">
+                          <Check className="h-10 w-10" strokeWidth={2.5} />
+                        </div>
+                      </motion.div>
+
+                      {/* Headline */}
+                      <motion.div
+                        initial={{ y: 14, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ delay: 0.18, duration: 0.5 }}
+                        className="mt-10 text-center"
+                      >
+                        <h4 className="mt-3 font-display font-light text-4xl md:text-5xl leading-[0.95] text-forest">
+                          Merci ,<span className="text-teal">{form.name ? ` ${form.name.split(" ")[0]}` : ""}.{" "}</span>
+                        </h4>
+                        <p className="mt-4 text-forest/70 max-w-md mx-auto leading-relaxed">
+                          Votre brief a été scellé et transmis à un associé. <br />Vous recevrez une réponse
+                          personnelle <span className="text-forest font-medium">sous 24h ouvrables</span> à{" "}
+                          <span className="text-forest font-medium">{form.email || "votre adresse"}</span>.
+                        </p>
+                      </motion.div>
+
+                      {/* Receipt card */}
+                      <motion.div
+                        initial={{ y: 20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ delay: 0.32, duration: 0.5 }}
+                        className="mt-8 mx-auto max-w-md rounded-2xl border border-forest/15 bg-canvas/60 backdrop-blur p-5 text-left"
+                      >
+                        <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.2em] text-forest/50 pb-3 border-b border-dashed border-forest/15">
+                          <span>RÉCÉPISSÉ</span>
+                          <span className="flex items-center gap-1.5">
+                            <span className="h-1.5 w-1.5 rounded-full bg-teal" /> REÇU
+                          </span>
+                        </div>
+                        <dl className="mt-3 space-y-2 text-sm">
+                          <Row k="Disciplines" v={form.services.join(" · ") || "—"} />
+                          <Row k="Cadre" v={`${form.budget || "—"} · ${form.timeline || "—"}`} />
+                          <Row k="Rendez-vous" v={`${form.preferredDate || "—"} · ${form.preferredTime || "—"}`} />
+                        </dl>
+                      </motion.div>
+
                     </div>
-                    <h4 className="mt-6 font-display text-3xl">Brief transmis.</h4>
-                    <p className="mt-3 text-forest/70 max-w-sm mx-auto">
-                        Un membre de l'équipe vous répond sous 24h. Vérifiez votre client mail si la fenêtre ne s'est pas ouverte.
-                    </p>
-                    <button onClick={resetForm} className="mt-8 inline-flex items-center gap-2 rounded-full bg-forest text-canvas px-6 py-3 font-head text-sm">
-                        Nouvelle commission
-                    </button>
-                    </div>
-                </Step>
+                  </Step>
                 )}
               </AnimatePresence>
 
@@ -203,14 +257,14 @@ export function HowItWorks({
               {step < 3 && (
                 <div className="mt-10 pt-6 border-t border-forest/10 flex items-center justify-between">
                   <button onClick={() => setStep((s) => Math.max(0, s - 1))} disabled={step === 0} className="font-label text-[10px] text-forest/70 disabled:opacity-30 hover:text-forest">
-                      ← Retour
+                    ← Retour
                   </button>
                   {step < 2 ? (
                     <button
                       onClick={() => setStep((s) => s + 1)}
                       disabled={!canNext}
                       className="inline-flex items-center gap-3 rounded-full bg-forest px-6 py-3 font-head text-sm text-canvas disabled:opacity-40 hover:bg-teal transition"
-                      >
+                    >
                       Continuer →
                     </button>
                   ) : (
@@ -228,7 +282,7 @@ export function HowItWorks({
   );
 }
 
-// ─── sous‑composants (inchangés) ──────────────────────────
+// ─── sous-composants ──────────────────────────
 
 function Step({ children }: { children: React.ReactNode }) {
   return (
@@ -310,11 +364,9 @@ function Field({
 function Stepper({ step }: { step: number }) {
   const labels = ["Services", "Cadre", "Identité", "Envoyé"];
   return (
-    /* ─ gap tight on mobile, relaxed on sm+ ─ */
     <div className="flex items-center gap-1.5 sm:gap-3 font-mono text-[10px] text-forest/60 w-full overflow-hidden">
       {labels.map((l, i) => (
         <div key={l} className="flex items-center gap-1 sm:gap-2 shrink-0">
-          {/* circle — never shrinks */}
           <span
             className={`grid place-items-center h-6 w-6 shrink-0 rounded-full border text-[10px] transition ${
               i === step
@@ -326,22 +378,24 @@ function Stepper({ step }: { step: number }) {
           >
             {i < step ? "✓" : i + 1}
           </span>
-          {/* label — hidden on xs, visible sm+ */}
-          <span className={`hidden sm:inline ${i === step ? "text-forest" : ""}`}>
-            {l}
-          </span>
-          {i < labels.length - 1 && (
-            <span className="text-forest/20">/</span>
-          )}
+          <span className={`hidden sm:inline ${i === step ? "text-forest" : ""}`}>{l}</span>
+          {i < labels.length - 1 && <span className="text-forest/20">/</span>}
         </div>
       ))}
     </div>
   );
 }
 
-/* ──────────────────────────────────────────────────────
- *  Scènes animées en arrière‑plan (inchangées)
- * ────────────────────────────────────────────────────── */
+function Row({ k, v }: { k: string; v: string }) {
+  return (
+    <div className="flex items-start justify-between gap-4">
+      <dt className="font-mono text-[10px] tracking-[0.2em] text-forest/50 pt-1 shrink-0">{k}</dt>
+      <dd className="text-forest text-right text-sm leading-snug">{v}</dd>
+    </div>
+  );
+}
+
+/* ────────────────────────────────────────────────────── */
 function SceneVideo() {
   return (
     <div className="absolute inset-0">

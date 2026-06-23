@@ -8,25 +8,25 @@ const SERVICES = [
   "Photo & Vidéo",
   "Marketing & Acquisition",
   "IA & Automatisation",
-  "Conseil & Organisation",
   "Logiciels propriétaires (abonnement léger)",
 ];
 
 const BUDGETS = ["<8000 DH", "8000 – 15000 DH", "15000 – 50000 DH", "+50000 DH"];
-const TIMELINES = ["Immédiat", "< 1 mois", "1 – 3 mois", "Exploration"];
+const TIMELINES = ["Immédiat", "< 1 mois", "1 – 3 mois"];
 
 type Form = {
   services: string[];
   budget: string;
   timeline: string;
   preferredDate: string;
+  preferredTime: string;
   name: string;
   email: string;
   company: string;
   brief: string;
 };
 
-const empty: Form = { services: [], budget: "", timeline: "", preferredDate: "", name: "", email: "", company: "", brief: "" };
+const empty: Form = { services: [], budget: "", timeline: "", preferredDate: "", preferredTime: "", name: "", email: "", company: "", brief: "" };
 
 export function CommissionModal({
   open,
@@ -64,7 +64,7 @@ export function CommissionModal({
   const canNext =
     (step === 0 && form.services.length > 0) ||
     (step === 1 && form.budget && form.timeline) ||
-    (step === 2 && form.name && form.email && form.preferredDate && form.brief);
+    (step === 2 && form.name && form.email && form.preferredDate && form.preferredTime && form.brief);
 
   const submit = async () => {
     setSubmitting(true);
@@ -222,13 +222,22 @@ export function CommissionModal({
                       <Field label="Nom" v={form.name} onChange={(v) => setForm({ ...form, name: v })} required />
                       <Field label="Email" type="email" v={form.email} onChange={(v) => setForm({ ...form, email: v })} required />
                     </div>
-                    <div className="mt-4 grid sm:grid-cols-2 gap-4">
+                    <div className="mt-4">
                       <Field label="Entreprise" v={form.company} onChange={(v) => setForm({ ...form, company: v })} />
+                    </div>
+                    <div className="mt-4 grid sm:grid-cols-2 gap-4">
                       <Field
                         label="Date souhaitée pour démarrer"
                         type="date"
                         v={form.preferredDate}
                         onChange={(v) => setForm({ ...form, preferredDate: v })}
+                        required
+                      />
+                      <Field
+                        label="Heure souhaitée (Maroc, GMT+1)"
+                        type="time"
+                        v={form.preferredTime}
+                        onChange={(v) => setForm({ ...form, preferredTime: v })}
                         required
                       />
                     </div>
@@ -240,17 +249,56 @@ export function CommissionModal({
 
                 {step === 3 && (
                   <Step key="s3">
-                    <div className="py-10 text-center">
-                      <div className="mx-auto grid place-items-center h-16 w-16 rounded-full bg-teal text-canvas">
-                        <Check className="h-7 w-7" />
-                      </div>
-                      <h4 className="mt-6 font-display text-3xl">Brief transmis.</h4>
-                      <p className="mt-3 text-forest/70 max-w-sm mx-auto">
-                        Un membre de l'équipe vous répond sous 24h. Vous allez recevoir un e-mail de confirmation.
-                      </p>
-                      <button onClick={onClose} className="mt-8 inline-flex items-center gap-2 rounded-full bg-forest text-canvas px-6 py-3 font-head text-sm">
-                        Fermer
-                      </button>
+                    <div className="relative py-8 md:py-12">
+                      {/* Seal */}
+                      <motion.div
+                        initial={{ scale: 0.6, rotate: -12, opacity: 0 }}
+                        animate={{ scale: 1, rotate: 0, opacity: 1 }}
+                        transition={{ type: "spring", stiffness: 220, damping: 16, delay: 0.05 }}
+                        className="mx-auto relative h-24 w-24"
+                      >
+                        <div className="absolute inset-0 rounded-full bg-teal-lt/10 animate-ping" />
+                        <div className="relative mx-auto grid place-items-center h-24 w-24 rounded-full bg-teal-lt text-canvas shadow-[0_18px_40px_-12px_rgba(0,0,0,0.35)] ring-8 ring-teal-lt/10">
+                          <Check className="h-10 w-10" strokeWidth={2.5} />
+                        </div>
+                      </motion.div>
+
+                      {/* Headline */}
+                      <motion.div
+                        initial={{ y: 14, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ delay: 0.18, duration: 0.5 }}
+                        className="mt-10 text-center"
+                      >
+                        <h4 className="mt-3 font-display font-light text-4xl md:text-5xl leading-[0.95] text-forest">
+                          Merci ,<span className="text-teal">{form.name ? ` ${form.name.split(" ")[0]}` : ""}.{" "}</span>
+                        </h4>
+                        <p className="mt-4 text-forest/70 max-w-md mx-auto leading-relaxed">
+                          Votre brief a été scellé et transmis à un associé. <br />Vous recevrez une réponse
+                          personnelle <span className="text-forest font-medium">sous 24h ouvrables</span> à{" "}
+                          <span className="text-forest font-medium">{form.email || "votre adresse"}</span>.
+                        </p>
+                      </motion.div>
+
+                      {/* Receipt card */}
+                      <motion.div
+                        initial={{ y: 20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ delay: 0.32, duration: 0.5 }}
+                        className="mt-8 mx-auto max-w-md rounded-2xl border border-forest/15 bg-canvas/60 backdrop-blur p-5 text-left"
+                      >
+                        <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.2em] text-forest/50 pb-3 border-b border-dashed border-forest/15">
+                          <span>RÉCÉPISSÉ</span>
+                          <span className="flex items-center gap-1.5">
+                            <span className="h-1.5 w-1.5 rounded-full bg-teal" /> REÇU
+                          </span>
+                        </div>
+                        <dl className="mt-3 space-y-2 text-sm">
+                          <Row k="Disciplines" v={form.services.join(" · ") || "—"} />
+                          <Row k="Cadre" v={`${form.budget || "—"} · ${form.timeline || "—"}`} />
+                          <Row k="Rendez-vous" v={`${form.preferredDate || "—"} · ${form.preferredTime || "—"}`} />
+                        </dl>
+                      </motion.div>
                     </div>
                   </Step>
                 )}
@@ -305,7 +353,7 @@ function Step({ children }: { children: React.ReactNode }) {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
-      transition={{ duration: 0.35, ease: [0.22,1,0.36,1] }}
+      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>
@@ -327,7 +375,7 @@ function Pills({ options, value, onChange }: { options: string[]; value: string;
             type="button"
             onClick={() => onChange(o)}
             className={`px-4 py-2.5 rounded-full border font-head text-sm transition focus-ring ${
-              on ? "bg-forest text-canvas border-forest" : "border-forest/20 hover:border-forest/50"
+              on ? "bg-forest text-canvas border-forest" : "text-forest border-forest/20 hover:border-forest/50"
             }`}
           >
             {o}
@@ -338,15 +386,37 @@ function Pills({ options, value, onChange }: { options: string[]; value: string;
   );
 }
 
-function Field({ label, v, onChange, type = "text", textarea, required }: {
-  label: string; v: string; onChange: (v: string) => void; type?: string; textarea?: boolean; required?: boolean;
+function Field({
+  label,
+  v,
+  onChange,
+  type = "text",
+  textarea,
+  required,
+}: {
+  label: string;
+  v: string;
+  onChange: (v: string) => void;
+  type?: string;
+  textarea?: boolean;
+  required?: boolean;
 }) {
-  const cls = "peer w-full bg-transparent border-b border-forest/20 pt-6 pb-2 text-forest font-head text-base outline-none focus:border-forest transition";
+  const cls =
+    "peer w-full bg-transparent border-b border-forest/20 pt-6 pb-2 text-forest font-head text-base outline-none focus:border-forest transition";
   return (
     <label className="relative block">
-      <span className="absolute left-0 top-2 font-label text-[10px] text-forest/60">{label}{required && " *"}</span>
+      <span className="absolute left-0 top-2 font-label text-[10px] text-forest/60">
+        {label}
+        {required && " *"}
+      </span>
       {textarea ? (
-        <textarea required={required} rows={4} value={v} onChange={(e) => onChange(e.target.value)} className={cls + " resize-none"} />
+        <textarea
+          required={required}
+          rows={4}
+          value={v}
+          onChange={(e) => onChange(e.target.value)}
+          className={cls + " resize-none"}
+        />
       ) : (
         <input required={required} type={type} value={v} onChange={(e) => onChange(e.target.value)} className={cls} />
       )}
@@ -360,12 +430,17 @@ function Stepper({ step }: { step: number }) {
     <div className="flex items-center gap-1.5 sm:gap-3 font-mono text-[10px] text-forest/60 w-full overflow-hidden">
       {labels.map((l, i) => (
         <div key={l} className="flex items-center gap-1 sm:gap-2 shrink-0">
-          {/* circle — never shrinks */}
-          <span className={`grid place-items-center h-6 w-6 shrink-0 rounded-full border text-[10px] transition ${
-            i === step ? "bg-forest text-canvas border-forest" :
-            i < step ? "bg-teal text-canvas border-teal" : "border-forest/20"
-          }`}>{i < step ? "✓" : i + 1}</span>
-          {/* label — hidden on xs, visible sm+ */}
+          <span
+            className={`grid place-items-center h-6 w-6 shrink-0 rounded-full border text-[10px] transition ${
+              i === step
+                ? "bg-forest text-canvas border-forest"
+                : i < step
+                ? "bg-teal text-canvas border-teal"
+                : "border-forest/20"
+            }`}
+          >
+            {i < step ? "✓" : i + 1}
+          </span>
           <span className={`hidden sm:inline ${i === step ? "text-forest" : ""}`}>{l}</span>
           {i < labels.length - 1 && <span className="text-forest/20">/</span>}
         </div>
@@ -374,26 +449,49 @@ function Stepper({ step }: { step: number }) {
   );
 }
 
-/* ──────────────────────────────────────────────────────
- *  Looping side "video": four painterly CSS scenes
- *  (sketching · print proofs · color swatches · tabletop)
- * ────────────────────────────────────────────────────── */
+function Row({ k, v }: { k: string; v: string }) {
+  return (
+    <div className="flex items-start justify-between gap-4">
+      <dt className="font-mono text-[10px] tracking-[0.2em] text-forest/50 pt-1 shrink-0">{k}</dt>
+      <dd className="text-forest text-right text-sm leading-snug">{v}</dd>
+    </div>
+  );
+}
+
+/* ────────────────────────────────────────────────────── */
 function SceneVideo() {
   return (
     <div className="absolute inset-0">
-      {/* Scene 1   sketching */}
+      {/* Scene 1 */}
       <div className="scene scene-1 bg-forest-md">
         <div className="absolute inset-0 paper-grid opacity-20" />
         <svg viewBox="0 0 400 600" className="absolute inset-0 h-full w-full" preserveAspectRatio="xMidYMid slice">
           <g stroke="oklch(0.81 0.06 90)" strokeWidth="1.4" fill="none" opacity="0.85">
-            <motion.path d="M40 480 Q140 360 220 440 T380 380" initial={{ pathLength: 0 }} animate={{ pathLength: [0, 1, 1] }} transition={{ duration: 6, repeat: Infinity, repeatDelay: 18 }} />
-            <motion.path d="M60 520 L340 200" initial={{ pathLength: 0 }} animate={{ pathLength: [0, 1, 1] }} transition={{ duration: 6, repeat: Infinity, repeatDelay: 18, delay: 1 }} />
-            <motion.circle cx="260" cy="300" r="80" initial={{ pathLength: 0 }} animate={{ pathLength: [0, 1, 1] }} transition={{ duration: 6, repeat: Infinity, repeatDelay: 18, delay: 2 }} />
+            <motion.path
+              d="M40 480 Q140 360 220 440 T380 380"
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: [0, 1, 1] }}
+              transition={{ duration: 6, repeat: Infinity, repeatDelay: 18 }}
+            />
+            <motion.path
+              d="M60 520 L340 200"
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: [0, 1, 1] }}
+              transition={{ duration: 6, repeat: Infinity, repeatDelay: 18, delay: 1 }}
+            />
+            <motion.circle
+              cx="260"
+              cy="300"
+              r="80"
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: [0, 1, 1] }}
+              transition={{ duration: 6, repeat: Infinity, repeatDelay: 18, delay: 2 }}
+            />
           </g>
         </svg>
       </div>
 
-      {/* Scene 2   print proofs */}
+      {/* Scene 2 */}
       <div className="scene scene-2 bg-canvas/95">
         <div className="absolute inset-8 grid grid-cols-3 grid-rows-4 gap-2">
           {Array.from({ length: 12 }).map((_, i) => (
@@ -402,7 +500,9 @@ function SceneVideo() {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: i * 0.06, repeat: Infinity, repeatDelay: 22 }}
-              className={`rounded-sm ${i % 5 === 0 ? "bg-mondrian-red" : i % 4 === 0 ? "bg-mondrian-yellow" : i % 3 === 0 ? "bg-forest" : "bg-beige"}`}
+              className={`rounded-sm ${
+                i % 5 === 0 ? "bg-mondrian-red" : i % 4 === 0 ? "bg-mondrian-yellow" : i % 3 === 0 ? "bg-forest" : "bg-beige"
+              }`}
               style={{ opacity: 0.85 }}
             />
           ))}
@@ -410,15 +510,15 @@ function SceneVideo() {
         <div className="absolute bottom-6 left-8 font-mono text-[10px] text-forest/70">EPREUVES · 12 / 24</div>
       </div>
 
-      {/* Scene 3   color swatches */}
+      {/* Scene 3 */}
       <div className="scene scene-3 bg-beige">
         <div className="absolute inset-0 flex flex-col">
-          {["bg-forest","bg-teal","bg-gold","bg-mondrian-red","bg-mondrian-blue"].map((c, i) => (
+          {["bg-forest", "bg-teal", "bg-gold", "bg-mondrian-red", "bg-mondrian-blue"].map((c, i) => (
             <motion.div
               key={c}
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
-              transition={{ duration: 1, delay: i * 0.15, repeat: Infinity, repeatDelay: 22, ease: [0.22,1,0.36,1] }}
+              transition={{ duration: 1, delay: i * 0.15, repeat: Infinity, repeatDelay: 22, ease: [0.22, 1, 0.36, 1] }}
               style={{ originX: 0 }}
               className={`flex-1 ${c}`}
             />
@@ -427,7 +527,7 @@ function SceneVideo() {
         <div className="absolute bottom-6 left-8 font-mono text-[10px] text-canvas mix-blend-difference">PALETTE · 05</div>
       </div>
 
-      {/* Scene 4   tabletop */}
+      {/* Scene 4 */}
       <div className="scene scene-4 bg-cream">
         <div className="absolute inset-0 paper-grid opacity-30" />
         <motion.div
@@ -447,7 +547,11 @@ function SceneVideo() {
           transition={{ duration: 1, delay: 0.3, repeat: Infinity, repeatDelay: 22 }}
           className="absolute bottom-12 right-8 w-52 h-40 bg-forest text-canvas shadow-xl rounded-sm p-4"
         >
-          <div className="font-display text-2xl leading-tight">Architecture<br/><span className="italic text-gold">éditée.</span></div>
+          <div className="font-display text-2xl leading-tight">
+            Architecture
+            <br />
+            <span className="italic text-gold">éditée.</span>
+          </div>
         </motion.div>
         <motion.div
           animate={{ rotate: [0, 360] }}
@@ -456,8 +560,9 @@ function SceneVideo() {
         />
       </div>
 
-      {/* permanent vignette */}
+      {/* vignette */}
       <div className="absolute inset-0 bg-gradient-to-t from-forest via-transparent to-transparent pointer-events-none" />
     </div>
   );
 }
+
