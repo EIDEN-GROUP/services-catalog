@@ -106,8 +106,8 @@ Deno.serve(async (req: Request) => {
  *  Logo: wordmark   |   Icon: circular mark
  * ════════════════════════════════════════════ */
 
-const LOGO_URL = "/src/assets/logo-1.png";
-const ICON_URL = "/src/assets/icon.png";
+const LOGO_URL = "https://catalog.eiden-group.com/assets/logo-1-DCtIO3Wj.png";
+const ICON_URL = "https://catalog.eiden-group.com/assets/icon-DrN0WKJE.png";
 
 /* ════════════════════════════════════════════
  *  SHARED EMAIL SHELL — EIDEN Editorial Light
