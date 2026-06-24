@@ -314,12 +314,12 @@ function buildAdminEmailHtml(data: {
                     <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
                       <tr>
                         <td width="36" class="eiden-field-num" style="vertical-align:top;padding-top:1px;">
-                          <span style="font-family:'JetBrains Mono','Courier New',monospace;font-size:9px;font-weight:600;color:#0C5657;letter-spacing:1px;">${f.num}</span>
+                          <span style="font-family:'JetBrains Mono','Courier New',monospace;font-size:10px;font-weight:600;color:#0C5657;letter-spacing:1px;">${f.num}</span>
                         </td>
-                        <td width="120" class="eiden-field-label" style="font-family:'JetBrains Mono','Courier New',monospace;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#9b8c6b;vertical-align:top;padding-top:3px;">
+                        <td width="120" class="eiden-field-label" style="font-family:'JetBrains Mono','Courier New',monospace;font-size:14px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#9b8c6b;vertical-align:top;padding-top:3px;">
                           ${f.label}
                         </td>
-                        <td class="eiden-field-value" style="font-family:'Geist','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;font-weight:500;line-height:1.5;color:#0E1B15;vertical-align:top;">
+                        <td class="eiden-field-value" style="font-family:'Geist','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:16px;font-weight:500;line-height:1.5;color:#0E1B15;vertical-align:top;">
                           ${f.value}
                         </td>
                       </tr>
@@ -406,7 +406,7 @@ function buildAdminEmailHtml(data: {
                 </tr>
                 <tr>
                   <td class="eiden-reply" style="font-family:'Geist','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:13px;color:rgba(14,27,21,0.55);line-height:1.6;">
-                    Répondre à <span style="color:#0C5657;">${escapeHtml(email)}</span> — sous 24 heures ouvrées.
+                    Répondre à <span style="color:#0C5657;">${escapeHtml(email)}</span> sous 24 heures ouvrées.
                   </td>
                 </tr>
               </table>

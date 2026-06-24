@@ -23,10 +23,11 @@ type Form = {
   name: string;
   email: string;
   company: string;
+  industry: string;
   brief: string;
 };
 
-const empty: Form = { services: [], budget: "", timeline: "", preferredDate: "", preferredTime: "", name: "", email: "", company: "", brief: "" };
+const empty: Form = { services: [], budget: "", timeline: "", preferredDate: "", preferredTime: "", name: "", email: "", company: "", industry: "", brief: "" };
 
 export function HowItWorks({
   initialService,
@@ -201,8 +202,9 @@ export function HowItWorks({
                       <Field label="Nom" v={form.name} onChange={(v) => setForm({ ...form, name: v })} required />
                       <Field label="Email" type="email" v={form.email} onChange={(v) => setForm({ ...form, email: v })} required />
                     </div>
-                    <div className="mt-4">
-                      <Field label="Entreprise" v={form.company} onChange={(v) => setForm({ ...form, company: v })} />
+                    <div className="mt-4 grid sm:grid-cols-2 gap-4">
+                      <Field label="Entreprise" v={form.company} onChange={(v) => setForm({ ...form, company: v })} required/>
+                      <Field label="Industrie" v={form.industry} onChange={(v) => setForm({ ...form, industry: v })} required/>
                     </div>
                     <div className="mt-4 grid sm:grid-cols-2 gap-4">
                       <Field
