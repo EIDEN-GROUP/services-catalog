@@ -1,5 +1,6 @@
 import nodemailer from "nodemailer";
 
+
 interface Payload {
   name: string;
   email: string;
@@ -68,7 +69,7 @@ Deno.serve(async (req: Request) => {
     });
 
     const servicesStr = services.join(", ");
-    const subject = `Nouvelle commission · ${name}${company ? ` · ${company}` : ""}`;
+    const subject = `Nouvelle demande · ${name}${company ? ` · ${company}` : ""}`;
 
     await transporter.sendMail({
       from: smtpFrom,
@@ -81,7 +82,7 @@ Deno.serve(async (req: Request) => {
     await transporter.sendMail({
       from: smtpFrom,
       to: email,
-      subject: "Confirmation de votre commission · EIDEN Group",
+      subject: "Confirmation de votre demande · EIDEN Group",
       html: buildVisitorEmailHtml(name),
     });
 
@@ -105,8 +106,8 @@ Deno.serve(async (req: Request) => {
  *  Logo: wordmark   |   Icon: circular mark
  * ════════════════════════════════════════════ */
 
-const LOGO_URL = "https://eiden-group.com/f6277845fd7d32545c93f7a66b81f9cfddb143e3.png";
-const ICON_URL = "https://eiden-group.com/icon.png"; // Replace with your actual icon URL
+const LOGO_URL = "/src/assets/logo-1.png";
+const ICON_URL = "/src/assets/icon.png";
 
 /* ════════════════════════════════════════════
  *  SHARED EMAIL SHELL — EIDEN Editorial Light
@@ -291,7 +292,7 @@ function emailShell(content: ShellContent): string {
 
           <tr>
             <td style="padding:16px 0 0;font-family:'JetBrains Mono','Courier New',monospace;font-size:7px;letter-spacing:1px;text-transform:uppercase;color:rgba(250,249,246,0.25);text-align:center;">
-              Architecture d'entreprise · Agadir, Maroc
+              Business Architecture · Agadir, Maroc
             </td>
           </tr>
 
@@ -305,7 +306,7 @@ function emailShell(content: ShellContent): string {
 }
 
 /* ════════════════════════════════════════════
- *  ADMIN EMAIL — Editorial Commission Document
+ *  ADMIN EMAIL — Editorial Demand Document
  * ════════════════════════════════════════════ */
 
 function buildAdminEmailHtml(data: {
@@ -415,9 +416,9 @@ function buildAdminEmailHtml(data: {
   `;
 
   return emailShell({
-    preheader: `Nouvelle commission de ${name}${company && company !== "Non renseigné" ? ` (${company})` : ""}`,
-    metaLeft: "EIDEN / COMMISSION",
-    metaRight: "ARCHITECTURE",
+    preheader: `Nouvelle demande de ${name}${company && company !== "Non renseigné" ? ` (${company})` : ""}`,
+    metaLeft: "EIDEN GROUP",
+    metaRight: "BUSINESS ARCHITECTURE",
     figureLabel: "FIG. 01 / 01",
     body,
   });
@@ -500,8 +501,8 @@ function buildVisitorEmailHtml(name: string): string {
   `;
 
   return emailShell({
-    preheader: `Merci ${name} — Votre commission a bien été reçue`,
-    metaLeft: "EIDEN / COMMISSION",
+    preheader: `Merci ${name} Votre demande a bien été reçue`,
+    metaLeft: "EIDEN GROUP",
     metaRight: "CONFIRMATION",
     figureLabel: "FIG. 01 / 01",
     body,
