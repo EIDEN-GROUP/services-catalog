@@ -267,8 +267,7 @@ function emailShell(content: ShellContent): string {
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                   <td style="font-family:'JetBrains Mono','Courier New',monospace;font-size:8px;line-height:1.8;color:${footerFgMuted};letter-spacing:0.6px;">
-                    <strong style="color:${footerFg};font-weight:600;">EIDEN GROUP</strong><br />
-                    Agadir Bay, Technopole · Agadir, Maroc
+                    Agadir Bay, Technopole 1 Bloc B· Agadir, Maroc
                   </td>
                   <td align="right" style="font-family:'JetBrains Mono','Courier New',monospace;font-size:8px;line-height:1.8;color:${footerFgMuted};letter-spacing:0.4px;">
                     <span style="color:#0C5657;">eiden-group.com</span><br />
@@ -458,12 +457,12 @@ function buildVisitorEmailHtml(name: string): string {
   `).join("");
 
   const body = `
-        <!-- TITLE BLOCK — Thank you, [Name]. -->
+        <!-- TITLE BLOCK Thank you, [Name]. -->
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:36px;">
           <tr>
             <td>
               <h1 style="margin:0;font-family:'Fraunces',Georgia,serif;font-size:30px;font-weight:400;line-height:1.2;letter-spacing:-0.5px;color:#0E1B15;">
-                Thank you,<br />
+                Merci, 
                 <span style="font-weight:600;">${escapeHtml(name)}</span><span style="color:#E85D4A;">.</span>
               </h1>
               <p style="margin:16px 0 0;font-family:'Geist','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;line-height:1.7;color:rgba(14,27,21,0.50);max-width:420px;">
