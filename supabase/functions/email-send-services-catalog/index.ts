@@ -266,10 +266,10 @@ function emailShell(content: ShellContent): string {
             <td>
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                  <td style="font-family:'JetBrains Mono','Courier New',monospace;font-size:8px;line-height:1.8;color:${footerFgMuted};letter-spacing:0.6px;">
+                  <td style="font-family:'JetBrains Mono','Courier New',monospace;font-size:9px;line-height:1.8;color:${footerFgMuted};letter-spacing:0.6px;">
                     Agadir Bay, Technopole 1 Bloc B· Agadir, Maroc
                   </td>
-                  <td align="right" style="font-family:'JetBrains Mono','Courier New',monospace;font-size:8px;line-height:1.8;color:${footerFgMuted};letter-spacing:0.4px;">
+                  <td align="right" style="font-family:'JetBrains Mono','Courier New',monospace;font-size:9px;line-height:1.8;color:${footerFgMuted};letter-spacing:0.4px;">
                     <span style="color:#0C5657;">eiden-group.com</span><br />
                     <span style="color:#CFC292;">contact@eiden-group.com</span>
                   </td>
