@@ -193,7 +193,11 @@ function emailShell(content: ShellContent): string {
     <tr>
       <td align="center" class="eiden-outer" style="padding:24px 20px;">
 
-        <table role="presentation" width="600" cellpadding="0" cellspacing="0" class="eiden-shell" style="max-width:600px;width:100%;">
+        <table role="presentation" width="60%" cellpadding="0" cellspacing="0" style="margin:0 auto;">
+          <tr>
+            <td>
+
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" class="eiden-shell" style="max-width:600px;width:100%;box-shadow:0 4px 24px rgba(14,27,21,0.12);border-radius:4px;overflow:hidden;">
 
           <!-- Mondrian bars -->
           <tr>
@@ -260,6 +264,10 @@ function emailShell(content: ShellContent): string {
 
         </table>
 
+            </td>
+          </tr>
+        </table>
+
       </td>
     </tr>
   </table>
@@ -268,7 +276,10 @@ function emailShell(content: ShellContent): string {
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:${footerBg};">
     <tr>
       <td align="center" class="eiden-footer-pad" style="padding:18px 20px;">
-        <table role="presentation" width="600" cellpadding="0" cellspacing="0" class="eiden-shell" style="max-width:600px;width:100%;">
+        <table role="presentation" width="60%" cellpadding="0" cellspacing="0" style="margin:0 auto;">
+          <tr>
+            <td>
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" class="eiden-shell" style="max-width:600px;width:100%;box-shadow:0 4px 24px rgba(14,27,21,0.12);border-radius:4px;overflow:hidden;">
           <tr>
             <td class="eiden-stack" style="vertical-align:middle;">
               <table role="presentation" cellpadding="0" cellspacing="0">
@@ -300,6 +311,12 @@ function emailShell(content: ShellContent): string {
           <tr>
             <td colspan="2" style="padding:8px 0 0;font-family:'JetBrains Mono','Courier New',monospace;font-size:7px;letter-spacing:1px;text-transform:uppercase;color:rgba(250,249,246,0.25);text-align:center;">
               Business Architecture · Agadir, Maroc
+            </td>
+          </tr>
+        </table>
+            </td>
+          </tr>
+        </table>
             </td>
           </tr>
         </table>
@@ -340,7 +357,7 @@ function buildAdminEmailHtml(data: {
                         <td width="36" class="eiden-field-num" style="vertical-align:top;padding-top:1px;">
                           <span style="font-family:'JetBrains Mono','Courier New',monospace;font-size:9px;font-weight:600;color:#0C5657;letter-spacing:1px;">${f.num}</span>
                         </td>
-                        <td width="120" class="eiden-field-label" style="font-family:'JetBrains Mono','Courier New',monospace;font-size:8px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#9b8c6b;vertical-align:top;padding-top:3px;">
+                        <td width="120" class="eiden-field-label" style="font-family:'JetBrains Mono','Courier New',monospace;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#9b8c6b;vertical-align:top;padding-top:3px;">
                           ${f.label}
                         </td>
                         <td class="eiden-field-value" style="font-family:'Geist','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;font-weight:500;line-height:1.5;color:#0E1B15;vertical-align:top;">

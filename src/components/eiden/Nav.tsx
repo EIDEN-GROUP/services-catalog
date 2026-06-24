@@ -47,10 +47,10 @@ function NavInner() {
         className="group inline-flex items-center gap-2.5 rounded-full bg-forest text-canvas
           px-4 md:px-5 py-2.5 font-mono text-[11px] md:text-xs hover:bg-teal transition
           focus-ring shrink-0"
-        aria-label="Appeler +212 7 77 77 74 28"
+        aria-label="Appeler 07 77 77 74 28 "
       >
         <Phone className="h-3.5 w-3.5" />
-        <span className="hidden sm:inline tracking-wider">+212 7 77 77 74 28</span>
+        <span className="hidden sm:inline">07 77 77 74 28 </span>
         <span className="sm:hidden">Appeler</span>
       </a>
     </div>

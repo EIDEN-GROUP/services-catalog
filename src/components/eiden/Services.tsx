@@ -49,7 +49,7 @@ export const SERVICES = [
   {
     n: "04",
     t: "Marketing & Acquisition",
-    d: "Déploiement publicitaire ciblé sur les réseaux sociaux, génération de leads stratégiques et optimisation de votre présence Google pour garantir un positionnement de premier plan.",
+    d: "De la stratégie à l’acquisition de clients, nous renforçons votre visibilité en ligne, attirons des prospects qualifiés et soutenons durablement votre croissance.",
     img: svcLeads, // keeping seo image imported in file structure as reference
     items: [
       "Réseaux sociaux Essentiel",
