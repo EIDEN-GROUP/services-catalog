@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useState, useEffect } from "react";
-import { Check } from "lucide-react";
+import { Check, AlertCircle } from "lucide-react";
 
 const SERVICES = [
   "Marque & Identité",
@@ -38,6 +38,8 @@ export function HowItWorks({
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<Form>(empty);
   const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
   const [commissionId, setCommissionId] = useState(() =>
     Math.floor(100000 + Math.random() * 899999)
   );
@@ -59,19 +61,48 @@ export function HowItWorks({
     (step === 1 && form.budget && form.timeline) ||
     (step === 2 && form.name && form.email && form.preferredDate && form.preferredTime && form.brief);
 
-  const submit = () => {
-    const subject = encodeURIComponent(`Commission   ${form.name}${form.company ? " · " + form.company : ""}`);
-    const body = encodeURIComponent(
-      `Services: ${form.services.join(", ")}\nBudget: ${form.budget}\nTimeline: ${form.timeline}\nDate souhaitée: ${form.preferredDate}\nHeure souhaitée (Maroc, GMT+1): ${form.preferredTime}\n\nNom: ${form.name}\nEmail: ${form.email}\nEntreprise: ${form.company}\n\nBrief:\n${form.brief}`
-    );
-    window.location.href = `mailto:contact@eiden-group.com?subject=${subject}&body=${body}`;
-    setSent(true);
-    setStep(3);
+  const submit = async () => {
+    setSubmitting(true);
+    setError("");
+
+    try {
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+      if (!supabaseUrl || !anonKey) {
+        throw new Error("Configuration Supabase manquante. Vérifiez VITE_SUPABASE_URL et VITE_SUPABASE_ANON_KEY.");
+      }
+
+      const res = await fetch(
+        `${supabaseUrl}/functions/v1/email-send-services-catalog`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${anonKey}`,
+          },
+          body: JSON.stringify(form),
+        }
+      );
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || `Erreur serveur (${res.status})`);
+      }
+
+      setSent(true);
+      setStep(3);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Erreur lors de l'envoi. Veuillez réessayer.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const resetForm = () => {
     setForm(empty);
     setSent(false);
+    setError("");
     setStep(0);
     setCommissionId(Math.floor(100000 + Math.random() * 899999));
   };
@@ -224,7 +255,7 @@ export function HowItWorks({
                         <p className="mt-4 text-forest/70 max-w-md mx-auto leading-relaxed">
                           Votre brief a été scellé et transmis à un associé. <br />Vous recevrez une réponse
                           personnelle <span className="text-forest font-medium">sous 24h ouvrables</span> à{" "}
-                          <span className="text-forest font-medium">{form.email || "votre adresse"}</span>.
+                          <span className="text-forest font-medium">{form.email || "votre adresse"}</span>. Un e-mail de confirmation vous a été envoyé.
                         </p>
                       </motion.div>
 
@@ -268,10 +299,16 @@ export function HowItWorks({
                       Continuer →
                     </button>
                   ) : (
-                    <button onClick={submit} disabled={!canNext} className="inline-flex items-center gap-3 rounded-full bg-mondrian-red px-6 py-3 font-head text-sm text-canvas disabled:opacity-40 hover:bg-forest transition">
-                      Envoyer la commission →
+                    <button onClick={submit} disabled={!canNext || submitting} className="inline-flex items-center gap-3 rounded-full bg-mondrian-red px-6 py-3 font-head text-sm text-canvas disabled:opacity-40 hover:bg-forest transition">
+                      {submitting ? "Envoi en cours..." : "Envoyer la commission →"}
                     </button>
                   )}
+                </div>
+              )}
+              {error && (
+                <div className="mt-4 flex items-start gap-2 text-mondrian-red text-sm">
+                  <AlertCircle className="h-4 w-4 mt-0.5 shrink-0" />
+                  <span>{error}</span>
                 </div>
               )}
             </div>

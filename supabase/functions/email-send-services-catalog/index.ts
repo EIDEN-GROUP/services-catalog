@@ -10,6 +10,7 @@ interface Payload {
   budget: string;
   timeline: string;
   preferredDate: string;
+  preferredTime?: string;
   brief: string;
 }
 
@@ -49,7 +50,7 @@ Deno.serve(async (req: Request) => {
     }
 
     const payload = (await req.json()) as Payload;
-    const { name, email, phone, company, services, budget, timeline, preferredDate, brief } = payload;
+    const { name, email, phone, company, services, budget, timeline, preferredDate, preferredTime, brief } = payload;
 
     if (!name || !email || !services?.length || !brief) {
       return new Response(
@@ -76,7 +77,7 @@ Deno.serve(async (req: Request) => {
       to: adminEmail,
       replyTo: email,
       subject,
-      html: buildAdminEmailHtml({ name, email, phone: phoneInfo, company: companyInfo, services: servicesStr, budget, timeline, preferredDate, brief }),
+      html: buildAdminEmailHtml({ name, email, phone: phoneInfo, company: companyInfo, services: servicesStr, budget, timeline, preferredDate, preferredTime, brief }),
     });
 
     await transporter.sendMail({
@@ -310,9 +311,9 @@ function emailShell(content: ShellContent): string {
 
 function buildAdminEmailHtml(data: {
   name: string; email: string; phone: string; company: string;
-  services: string; budget: string; timeline: string; preferredDate: string; brief: string;
+  services: string; budget: string; timeline: string; preferredDate: string; preferredTime?: string; brief: string;
 }): string {
-  const { name, email, phone, company, services, budget, timeline, preferredDate, brief } = data;
+  const { name, email, phone, company, services, budget, timeline, preferredDate, preferredTime, brief } = data;
 
   const fields = [
     { num: "01", label: "Nom complet", value: escapeHtml(name) },
@@ -323,6 +324,7 @@ function buildAdminEmailHtml(data: {
     { num: "06", label: "Budget", value: escapeHtml(budget) },
     { num: "07", label: "Horizon", value: escapeHtml(timeline) },
     { num: "08", "label": "Date souhaitée", value: escapeHtml(preferredDate) },
+    ...(preferredTime ? [{ num: "08b", "label": "Heure souhaitée", value: escapeHtml(preferredTime) }] : []),
   ];
 
   const fieldsRows = fields.map((f) => `
