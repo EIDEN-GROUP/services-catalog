@@ -41,7 +41,7 @@ Deno.serve(async (req: Request) => {
     const port = parseInt(Deno.env.get("SMTP_PORT") || "587");
     const user = Deno.env.get("SMTP_USER");
     const pass = Deno.env.get("SMTP_PASS");
-    const smtpFrom = Deno.env.get("SMTP_FROM") || user;
+    const smtpFrom = Deno.env.get("SMTP_FROM") || `EIDEN Group <${user}>`;
     const adminEmail = Deno.env.get("ADMIN_NOTIFICATION_EMAIL") || user;
 
     if (!host || !user || !pass) {
@@ -106,8 +106,8 @@ Deno.serve(async (req: Request) => {
  *  Logo: wordmark   |   Icon: circular mark
  * ════════════════════════════════════════════ */
 
-const LOGO_URL = "https://eiden-group.com/f6277845fd7d32545c93f7a66b81f9cfddb143e3.png";
-const ICON_URL = "https://eiden-group.com/icon.png";
+const LOGO_URL = "/src/assets/logo-1.png";
+const ICON_URL = "/src/assets/icon.png";
 
 /* ════════════════════════════════════════════
  *  SHARED EMAIL SHELL — EIDEN Editorial Light
