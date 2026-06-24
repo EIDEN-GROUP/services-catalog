@@ -141,7 +141,7 @@ export function Hero({ onCommission }: { onCommission: () => void }) {
               </button>
 
               <div className="font-mono text-[10px] text-black/60 leading-relaxed">
-                Gratuit · 30 minutes · Sans deck commercial · Sans engagement
+                Gratuit · 30 minutes · Sans engagement
               </div>
 
               <a
