@@ -111,6 +111,7 @@ const ICON_URL = "https://catalog.eiden-group.com/assets/icon-DrN0WKJE.png";
 
 /* ════════════════════════════════════════════
  *  SHARED EMAIL SHELL — EIDEN Editorial Light
+ *  Fully responsive via @media (max-width: 600px)
  * ════════════════════════════════════════════ */
 
 type ShellContent = {
@@ -129,11 +130,6 @@ function emailShell(content: ShellContent): string {
   const lineColor = "rgba(14,27,21,0.08)";
   const accentTeal = "#0C5657";
   const accentGold = "#9b8c6b";
-  // oklch(0.180 0.022 165) = dark forest
-  const footerBg = "#0E1B15";
-  const footerFg = "#FAF9F6";
-  const footerFgMuted = "rgba(250,249,246,0.45)";
-  const footerLineColor = "rgba(250,249,246,0.12)";
 
   const preheaderBlock = content.preheader
     ? `<div style="display:none;font-size:1px;color:${bg};line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden;">${content.preheader}</div>`
@@ -142,10 +138,10 @@ function emailShell(content: ShellContent): string {
   const figureBlock = content.figureLabel
     ? `
           <tr>
-            <td style="padding:10px 0 0;">
+            <td style="padding:8px 20px;">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                  <td style="font-family:'JetBrains Mono','Courier New',monospace;font-size:8px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:${accentTeal};">
+                  <td class="eiden-figure" style="font-family:'JetBrains Mono','Courier New',monospace;font-size:8px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:${accentTeal};">
                     ${content.figureLabel}
                   </td>
                 </tr>
@@ -168,21 +164,36 @@ function emailShell(content: ShellContent): string {
     table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
     img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
     table { border-collapse: collapse !important; }
+
+    /* ════════════════════════════════════════════
+     *  MOBILE RESPONSIVE — max-width: 600px
+     * ════════════════════════════════════════════ */
     @media only screen and (max-width: 600px) {
-      .eiden-outer { padding: 16px 12px !important; }
-      .eiden-shell { width: 100% !important; max-width: 100% !important; }
+      .eiden-outer { padding: 12px 8px !important; }
+      .eiden-shell { width: 100% !important; max-width: 100% !important; border-radius: 0 !important; }
+      .eiden-logo { width: 120px !important; }
       .eiden-title { font-size: 22px !important; line-height: 1.25 !important; }
-      .eiden-body-pad { padding: 0 4px !important; }
+      .eiden-body-pad { padding: 0 16px !important; }
       .eiden-stack { display: block !important; width: 100% !important; text-align: left !important; padding: 4px 0 !important; }
       .eiden-stack-right { text-align: left !important; }
-      .eiden-field-num { width: 28px !important; }
-      .eiden-field-label { display: block !important; width: 100% !important; padding: 2px 0 4px 0 !important; }
-      .eiden-field-value { display: block !important; width: 100% !important; font-size: 13px !important; }
-      .eiden-brief { padding: 16px 16px !important; }
+      .eiden-field-row { padding: 14px 0 !important; }
+      .eiden-field-num { width: 28px !important; padding-top: 2px !important; }
+      .eiden-field-label { display: block !important; width: 100% !important; padding: 6px 0 4px 0 !important; font-size: 9px !important; }
+      .eiden-field-value { display: block !important; width: 100% !important; font-size: 13px !important; padding-left: 0 !important; }
+      .eiden-brief { padding: 16px !important; }
       .eiden-brief-text { font-size: 14px !important; line-height: 1.7 !important; }
-      .eiden-footer-pad { padding: 16px 14px !important; }
-      .eiden-footer-icon { padding-right: 8px !important; }
-      .eiden-footer-links { text-align: left !important; padding-top: 8px !important; }
+      .eiden-step-row { padding: 14px 0 !important; }
+      .eiden-step-num { width: 28px !important; padding-top: 2px !important; }
+      .eiden-step-title { font-size: 13px !important; }
+      .eiden-step-desc { font-size: 12px !important; }
+      .eiden-closing { font-size: 13px !important; }
+      .eiden-reply { font-size: 12px !important; }
+      .eiden-footer-pad { padding: 16px !important; }
+      .eiden-footer-icon { padding-right: 10px !important; }
+      .eiden-footer-links { text-align: left !important; padding-top: 10px !important; font-size: 8px !important; }
+      .eiden-mondrian td { height: 2px !important; }
+      .eiden-meta { font-size: 8px !important; letter-spacing: 2px !important; }
+      .eiden-figure { font-size: 7px !important; letter-spacing: 2px !important; }
     }
   </style>
   ${preheaderBlock}
@@ -191,9 +202,9 @@ function emailShell(content: ShellContent): string {
 
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:${bg};">
     <tr>
-      <td align="center" class="eiden-outer" style="padding:24px 20px;">
+      <td align="center" class="eiden-outer" style="padding:24px 16px;">
 
-        <table role="presentation" width="60%" cellpadding="0" cellspacing="0" style="margin:0 auto;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 auto;max-width:600px;">
           <tr>
             <td>
 
@@ -202,7 +213,7 @@ function emailShell(content: ShellContent): string {
           <!-- Mondrian bars -->
           <tr>
             <td style="padding:0;font-size:1px;line-height:1px;">
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;width:100%;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="eiden-mondrian" style="border-collapse:collapse;width:100%;">
                 <tr>
                   <td style="height:3px;background-color:#0E1B15;width:40%;padding:0;"></td>
                   <td style="height:3px;background-color:#0C5657;width:25%;padding:0;"></td>
@@ -216,20 +227,20 @@ function emailShell(content: ShellContent): string {
 
           <!-- LOGO -->
           <tr>
-            <td style="padding:20px 0 0;">
-              <img src="${LOGO_URL}" alt="EIDEN Group" width="140" style="display:block;max-width:140px;height:auto;" />
+            <td style="padding:20px 20px 16px;">
+              <img src="${LOGO_URL}" alt="EIDEN Group" width="140" class="eiden-logo" style="display:block;max-width:140px;height:auto;" />
             </td>
           </tr>
 
           <!-- Header meta -->
           <tr>
-            <td style="padding:14px 0 0;">
+            <td style="padding:10px 20px;">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                  <td class="eiden-stack" style="font-family:'JetBrains Mono','Courier New',monospace;font-size:9px;font-weight:500;letter-spacing:2.8px;text-transform:uppercase;color:${fgMuted};">
+                  <td class="eiden-stack eiden-meta" style="font-family:'JetBrains Mono','Courier New',monospace;font-size:9px;font-weight:500;letter-spacing:2.8px;text-transform:uppercase;color:${fgMuted};">
                     ${content.metaLeft}
                   </td>
-                  <td align="right" class="eiden-stack eiden-stack-right" style="font-family:'JetBrains Mono','Courier New',monospace;font-size:9px;font-weight:500;letter-spacing:1.8px;text-transform:uppercase;color:${fgDim};">
+                  <td align="right" class="eiden-stack eiden-stack-right eiden-meta" style="font-family:'JetBrains Mono','Courier New',monospace;font-size:9px;font-weight:500;letter-spacing:1.8px;text-transform:uppercase;color:${fgDim};">
                     ${content.metaRight}
                   </td>
                 </tr>
@@ -239,7 +250,7 @@ function emailShell(content: ShellContent): string {
 
           <!-- Divider -->
           <tr>
-            <td style="padding:10px 0 0;">
+            <td style="padding:8px 20px;">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                   <td style="height:1px;background-color:${lineColor};font-size:1px;line-height:1px;"></td>
@@ -272,58 +283,6 @@ function emailShell(content: ShellContent): string {
     </tr>
   </table>
 
-  <!-- DARK FOOTER — compact -->
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:${footerBg};">
-    <tr>
-      <td align="center" class="eiden-footer-pad" style="padding:18px 20px;">
-        <table role="presentation" width="60%" cellpadding="0" cellspacing="0" style="margin:0 auto;">
-          <tr>
-            <td>
-        <table role="presentation" width="600" cellpadding="0" cellspacing="0" class="eiden-shell" style="max-width:600px;width:100%;box-shadow:0 4px 24px rgba(14,27,21,0.12);border-radius:4px;overflow:hidden;">
-          <tr>
-            <td class="eiden-stack" style="vertical-align:middle;">
-              <table role="presentation" cellpadding="0" cellspacing="0">
-                <tr>
-                  <td class="eiden-footer-icon" style="vertical-align:middle;padding-right:12px;">
-                    <img src="${ICON_URL}" alt="EIDEN" width="28" style="display:block;width:28px;height:auto;opacity:0.9;" />
-                  </td>
-                  <td style="vertical-align:middle;font-family:'JetBrains Mono','Courier New',monospace;font-size:9px;line-height:1.5;color:${footerFgMuted};letter-spacing:0.6px;">
-                    Agadir Bay, Technopole 1 Bloc B · Agadir, Maroc
-                  </td>
-                </tr>
-              </table>
-            </td>
-            <td align="right" class="eiden-stack eiden-footer-links" style="vertical-align:middle;font-family:'JetBrains Mono','Courier New',monospace;font-size:9px;line-height:1.5;letter-spacing:0.4px;">
-              <span style="color:#0C5657;">eiden-group.com</span>
-              <span style="color:${footerFgMuted};"> · </span>
-              <span style="color:#CFC292;">contact@eiden-group.com</span>
-            </td>
-          </tr>
-          <tr>
-            <td colspan="2" style="padding:12px 0 0;">
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-                <tr>
-                  <td style="height:1px;background-color:${footerLineColor};font-size:1px;line-height:1px;"></td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          <tr>
-            <td colspan="2" style="padding:8px 0 0;font-family:'JetBrains Mono','Courier New',monospace;font-size:7px;letter-spacing:1px;text-transform:uppercase;color:rgba(250,249,246,0.25);text-align:center;">
-              Business Architecture · Agadir, Maroc
-            </td>
-          </tr>
-        </table>
-            </td>
-          </tr>
-        </table>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
-
 </body>
 </html>`;
 }
@@ -346,12 +305,12 @@ function buildAdminEmailHtml(data: {
     { num: "05", label: "Services", value: escapeHtml(services) },
     { num: "06", label: "Budget", value: escapeHtml(budget) },
     { num: "07", label: "Horizon", value: escapeHtml(timeline) },
-    { num: "08", "label": "Date souhaitée", value: escapeHtml(preferredDate) },
+    { num: "08", label: "Date souhaitée", value: escapeHtml(preferredDate) },
   ];
 
   const fieldsRows = fields.map((f) => `
                 <tr>
-                  <td style="padding:9px 0;border-bottom:1px solid rgba(14,27,21,0.06);">
+                  <td class="eiden-field-row" style="padding:18px 0;border-bottom:1px solid rgba(14,27,21,0.06);">
                     <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
                       <tr>
                         <td width="36" class="eiden-field-num" style="vertical-align:top;padding-top:1px;">
@@ -371,11 +330,11 @@ function buildAdminEmailHtml(data: {
 
   const body = `
         <!-- TITLE BLOCK -->
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:20px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:16px;">
           <tr>
-            <td>
+            <td class="eiden-body-pad" style="padding:0 24px;">
               <h1 class="eiden-title" style="margin:0;font-family:'Fraunces',Georgia,serif;font-size:26px;font-weight:400;line-height:1.2;letter-spacing:-0.5px;color:#0E1B15;">
-                Demande de projet<br />
+                Demande de projet 
                 <span style="font-weight:600;">reçue</span><span style="color:#E85D4A;">.</span>
               </h1>
               <p style="margin:10px 0 0;font-family:'Geist','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;line-height:1.7;color:rgba(14,27,21,0.50);max-width:420px;">
@@ -386,16 +345,22 @@ function buildAdminEmailHtml(data: {
         </table>
 
         <!-- DIVIDER -->
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:16px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:14px;">
           <tr>
-            <td style="height:1px;background-color:rgba(14,27,21,0.08);font-size:1px;line-height:1px;"></td>
+            <td class="eiden-body-pad" style="padding:0 24px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="height:1px;background-color:rgba(14,27,21,0.08);font-size:1px;line-height:1px;"></td>
+                </tr>
+              </table>
+            </td>
           </tr>
         </table>
 
         <!-- DATA GRID -->
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:14px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:12px;">
           <tr>
-            <td>
+            <td class="eiden-body-pad" style="padding:0 24px;">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
                 ${fieldsRows}
               </table>
@@ -404,18 +369,24 @@ function buildAdminEmailHtml(data: {
         </table>
 
         <!-- BRIEF SECTION -->
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:18px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:14px;">
           <tr>
-            <td class="eiden-brief" style="padding:18px 22px;background-color:#F5F2EB;border-left:2px solid #0C5657;">
+            <td class="eiden-body-pad" style="padding:0 24px;">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                  <td style="font-family:'JetBrains Mono','Courier New',monospace;font-size:8px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:#0C5657;padding-bottom:8px;">
-                    09 · Brief
-                  </td>
-                </tr>
-                <tr>
-                  <td class="eiden-brief-text" style="font-family:'Fraunces',Georgia,serif;font-size:15px;line-height:1.8;color:#0E1B15;font-style:italic;white-space:pre-wrap;">
-                    "${escapeHtml(brief)}"
+                  <td class="eiden-brief" style="padding:18px 22px;background-color:#F5F2EB;border-left:2px solid #0C5657;">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td style="font-family:'JetBrains Mono','Courier New',monospace;font-size:8px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:#0C5657;padding-bottom:8px;">
+                          09 · Brief
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="eiden-brief-text" style="font-family:'Fraunces',Georgia,serif;font-size:15px;line-height:1.8;color:#0E1B15;font-style:italic;white-space:pre-wrap;">
+                          "${escapeHtml(brief)}"
+                        </td>
+                      </tr>
+                    </table>
                   </td>
                 </tr>
               </table>
@@ -424,15 +395,70 @@ function buildAdminEmailHtml(data: {
         </table>
 
         <!-- REPLY INFO -->
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:16px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:14px;">
           <tr>
-            <td style="font-family:'JetBrains Mono','Courier New',monospace;font-size:8px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:rgba(14,27,21,0.30);padding-bottom:6px;">
-              Réponse · Directe
+            <td class="eiden-body-pad" style="padding:0 24px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="font-family:'JetBrains Mono','Courier New',monospace;font-size:8px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:rgba(14,27,21,0.30);padding-bottom:6px;">
+                    Réponse · Directe
+                  </td>
+                </tr>
+                <tr>
+                  <td class="eiden-reply" style="font-family:'Geist','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:13px;color:rgba(14,27,21,0.55);line-height:1.6;">
+                    Répondre à <span style="color:#0C5657;">${escapeHtml(email)}</span> — sous 24 heures ouvrées.
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
+        </table>
+
+        <!-- DARK FOOTER -->
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:28px;">
           <tr>
-            <td style="font-family:'Geist','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:13px;color:rgba(14,27,21,0.55);line-height:1.6;">
-              Répondre à <span style="color:#0C5657;">${escapeHtml(email)}</span> — sous 24 heures ouvrées.
+            <td style="padding:0;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#0E1B15;">
+                <tr>
+                  <td class="eiden-footer-pad" style="padding:18px 24px;">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td class="eiden-stack" style="vertical-align:middle;">
+                          <table role="presentation" cellpadding="0" cellspacing="0">
+                            <tr>
+                              <td class="eiden-footer-icon" style="vertical-align:middle;padding-right:12px;">
+                                <img src="${ICON_URL}" alt="EIDEN" width="28" style="display:block;width:28px;height:auto;opacity:0.9;" />
+                              </td>
+                              <td style="vertical-align:middle;font-family:'JetBrains Mono','Courier New',monospace;font-size:9px;line-height:1.5;color:rgba(250,249,246,0.45);letter-spacing:0.6px;">
+                                Agadir Bay, Technopole 1 Bloc B · Agadir, Maroc
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                        <td align="right" class="eiden-stack eiden-footer-links" style="vertical-align:middle;font-family:'JetBrains Mono','Courier New',monospace;font-size:9px;line-height:1.5;letter-spacing:0.4px;">
+                          <span style="color:#0C5657;">eiden-group.com</span>
+                          <span style="color:rgba(250,249,246,0.45);"> · </span>
+                          <span style="color:#CFC292;">contact@eiden-group.com</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="2" style="padding:12px 0 0;">
+                          <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                            <tr>
+                              <td style="height:1px;background-color:rgba(250,249,246,0.12);font-size:1px;line-height:1px;"></td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="2" style="padding:8px 0 0;font-family:'JetBrains Mono','Courier New',monospace;font-size:7px;letter-spacing:1px;text-transform:uppercase;color:rgba(250,249,246,0.25);text-align:center;">
+                          Business Architecture · Agadir, Maroc
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
         </table>
@@ -460,17 +486,17 @@ function buildVisitorEmailHtml(name: string): string {
 
   const stepsRows = steps.map((step) => `
           <tr>
-            <td style="padding:10px 0;border-bottom:1px solid rgba(14,27,21,0.06);">
+            <td class="eiden-step-row" style="padding:18px 0;border-bottom:1px solid rgba(14,27,21,0.06);">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                  <td width="36" style="vertical-align:top;padding-top:1px;">
+                  <td width="36" class="eiden-step-num" style="vertical-align:top;padding-top:1px;">
                     <span style="font-family:'JetBrains Mono','Courier New',monospace;font-size:9px;font-weight:600;color:#0C5657;letter-spacing:1px;">${step.num}</span>
                   </td>
                   <td style="vertical-align:top;">
-                    <p style="margin:0;font-family:'Geist','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;font-weight:600;color:#0E1B15;line-height:1.4;">
+                    <p class="eiden-step-title" style="margin:0;font-family:'Geist','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;font-weight:600;color:#0E1B15;line-height:1.4;">
                       ${step.title}
                     </p>
-                    <p style="margin:4px 0 0;font-family:'Geist','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:12px;font-weight:400;color:rgba(14,27,21,0.45);line-height:1.5;">
+                    <p class="eiden-step-desc" style="margin:4px 0 0;font-family:'Geist','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:12px;font-weight:400;color:rgba(14,27,21,0.45);line-height:1.5;">
                       ${step.desc}
                     </p>
                   </td>
@@ -481,10 +507,10 @@ function buildVisitorEmailHtml(name: string): string {
   `).join("");
 
   const body = `
-        <!-- TITLE BLOCK Thank you, [Name]. -->
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:20px;">
+        <!-- TITLE BLOCK -->
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:16px;">
           <tr>
-            <td>
+            <td class="eiden-body-pad" style="padding:0 24px;">
               <h1 class="eiden-title" style="margin:0;font-family:'Fraunces',Georgia,serif;font-size:26px;font-weight:400;line-height:1.2;letter-spacing:-0.5px;color:#0E1B15;">
                 Merci, 
                 <span style="font-weight:600;">${escapeHtml(name)}</span><span style="color:#E85D4A;">.</span>
@@ -497,27 +523,94 @@ function buildVisitorEmailHtml(name: string): string {
         </table>
 
         <!-- DIVIDER -->
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:16px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:14px;">
           <tr>
-            <td style="height:1px;background-color:rgba(14,27,21,0.08);font-size:1px;line-height:1px;"></td>
+            <td class="eiden-body-pad" style="padding:0 24px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="height:1px;background-color:rgba(14,27,21,0.08);font-size:1px;line-height:1px;"></td>
+                </tr>
+              </table>
+            </td>
           </tr>
         </table>
 
         <!-- NEXT STEPS -->
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:24px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:20px;">
           <tr>
-            <td style="font-family:'JetBrains Mono','Courier New',monospace;font-size:8px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:#0C5657;padding-bottom:10px;">
-              Prochaines étapes
+            <td class="eiden-body-pad" style="padding:0 24px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="font-family:'JetBrains Mono','Courier New',monospace;font-size:8px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:#0C5657;padding-bottom:10px;">
+                    Prochaines étapes
+                  </td>
+                </tr>
+                ${stepsRows}
+              </table>
             </td>
           </tr>
-          ${stepsRows}
         </table>
 
         <!-- CLOSING NOTE -->
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:24px;">
+          <tr>
+            <td class="eiden-body-pad" style="padding:0 24px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td class="eiden-closing" style="font-family:'Fraunces',Georgia,serif;font-size:14px;font-style:italic;line-height:1.7;color:rgba(14,27,21,0.40);">
+                    Pas un problème de stratégie. Un problème de structure.
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+
+        <!-- DARK FOOTER -->
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:28px;">
           <tr>
-            <td style="font-family:'Fraunces',Georgia,serif;font-size:14px;font-style:italic;line-height:1.7;color:rgba(14,27,21,0.40);">
-              Pas un problème de stratégie. Un problème de structure.
+            <td style="padding:0;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#0E1B15;">
+                <tr>
+                  <td class="eiden-footer-pad" style="padding:18px 24px;">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td class="eiden-stack" style="vertical-align:middle;">
+                          <table role="presentation" cellpadding="0" cellspacing="0">
+                            <tr>
+                              <td class="eiden-footer-icon" style="vertical-align:middle;padding-right:12px;">
+                                <img src="${ICON_URL}" alt="EIDEN" width="28" style="display:block;width:28px;height:auto;opacity:0.9;" />
+                              </td>
+                              <td style="vertical-align:middle;font-family:'JetBrains Mono','Courier New',monospace;font-size:9px;line-height:1.5;color:rgba(250,249,246,0.45);letter-spacing:0.6px;">
+                                Agadir Bay, Technopole 1 Bloc B · Agadir, Maroc
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                        <td align="right" class="eiden-stack eiden-footer-links" style="vertical-align:middle;font-family:'JetBrains Mono','Courier New',monospace;font-size:9px;line-height:1.5;letter-spacing:0.4px;">
+                          <span style="color:#0C5657;">eiden-group.com</span>
+                          <span style="color:rgba(250,249,246,0.45);"> · </span>
+                          <span style="color:#CFC292;">contact@eiden-group.com</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="2" style="padding:12px 0 0;">
+                          <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                            <tr>
+                              <td style="height:1px;background-color:rgba(250,249,246,0.12);font-size:1px;line-height:1px;"></td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="2" style="padding:8px 0 0;font-family:'JetBrains Mono','Courier New',monospace;font-size:7px;letter-spacing:1px;text-transform:uppercase;color:rgba(250,249,246,0.25);text-align:center;">
+                          Business Architecture · Agadir, Maroc
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
         </table>
